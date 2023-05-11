@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import Root from "./Routes/Root/Root";
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <div>Корень</div>
+        element: <Root />
     },
     {
         path: '/:id',

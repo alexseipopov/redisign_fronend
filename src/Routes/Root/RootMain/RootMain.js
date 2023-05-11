@@ -4,6 +4,7 @@ import intro_img from './../../../static/intro.png'
 import {useEffect, useState} from "react";
 import Loader from "../../../components/Loader/Loader";
 import axios from "axios";
+import {Link} from "react-router-dom";
 
 const RootMain = () => {
     const [indexes, setIndexes] = useState([])
@@ -12,6 +13,7 @@ const RootMain = () => {
         setLoader(true)
         axios("http://localhost:3010/api/get_all_index")
             .then(data => {
+                console.log(data.data)
                 setIndexes(data.data)
             })
             .finally(() => {
@@ -53,12 +55,12 @@ const RootMain = () => {
                                     <Loader/>
                                 </div>
                                 : indexes.map(elem => (
-                                    <div onClick={() => console.log("click")} className={'root_main-table_row'}>
+                                    <Link to={`${elem.url}`} className={'root_main-table_row'}>
                                         <div className={"root_main-symbol"}>{elem.text}</div>
                                         <div className={"root_main-name"}>{elem.text} Index</div>
                                         <div className={"root_main-isin"}>{elem.isin}</div>
                                         <div className={"root_main-value"}>{elem.level}</div>
-                                    </div>
+                                    </Link>
                                 ))}
                         </div>
                     </div>

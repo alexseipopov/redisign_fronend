@@ -80,6 +80,7 @@ h2 {
     font-weight: 400;
     font-size: 16px;
     cursor: pointer;
+    text-decoration: none;
 }
 .root_main-table_row:hover {
     background-color: #F5F6FA;

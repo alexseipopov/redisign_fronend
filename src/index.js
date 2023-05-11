@@ -4,6 +4,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Root from "./Routes/Root/Root";
+import Stock from "./Routes/Stock/Stock";
 
 const router = createBrowserRouter([
     {
@@ -12,7 +13,7 @@ const router = createBrowserRouter([
     },
     {
         path: '/:id',
-        element: <div>Stock</div>
+        element: <Stock />
     }
 ])
 

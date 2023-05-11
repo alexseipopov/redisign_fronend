@@ -87,3 +87,9 @@ h2 {
 .root_main-table_row:not(:last-child) {
     border-bottom: 1px solid #E4E4EB;
 }
+.root_main-table_row-loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}

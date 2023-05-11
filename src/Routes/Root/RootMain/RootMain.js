@@ -13,7 +13,6 @@ const RootMain = () => {
         axios("http://localhost:3010/api/get_all_index")
             .then(data => {
                 setIndexes(data.data)
-
             })
             .finally(() => {
                 setLoader(false)
@@ -42,21 +41,25 @@ const RootMain = () => {
                     </div>
                     <div className={'main_root-indexes'}>
                         <h2>Индексы</h2>
-                        <div className={'root_main-table'} >
-                            <div className={'root_main-table_head'} >
+                        <div className={'root_main-table'}>
+                            <div className={'root_main-table_head'}>
                                 <div className={"root_main-symbol"}>Символ</div>
                                 <div className={"root_main-name"}>Название</div>
                                 <div className={"root_main-isin"}>ISIN</div>
                                 <div className={"root_main-value"}>Значение</div>
                             </div>
-                            {indexes.map(elem => (
-                                <div onClick={() => console.log("click")} className={'root_main-table_row'} >
-                                    <div className={"root_main-symbol"}>{elem.text}</div>
-                                    <div className={"root_main-name"}>{elem.text} Index</div>
-                                    <div className={"root_main-isin"}>{elem.isin}</div>
-                                    <div className={"root_main-value"}>{elem.level}</div>
+                            {loader
+                                ? <div className={"root_main-table_row root_main-table_row-loader"}>
+                                    <Loader/>
                                 </div>
-                            ))}
+                                : indexes.map(elem => (
+                                    <div onClick={() => console.log("click")} className={'root_main-table_row'}>
+                                        <div className={"root_main-symbol"}>{elem.text}</div>
+                                        <div className={"root_main-name"}>{elem.text} Index</div>
+                                        <div className={"root_main-isin"}>{elem.isin}</div>
+                                        <div className={"root_main-value"}>{elem.level}</div>
+                                    </div>
+                                ))}
                         </div>
                     </div>
                 </div>

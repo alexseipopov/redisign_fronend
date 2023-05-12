@@ -2,6 +2,7 @@ import './Select.css'
 import {useState} from "react";
 import arrow_up from './../../static/arrow_up.svg'
 import arrow_down from './../../static/arrow_down.svg'
+import {Link} from "react-router-dom";
 
 const Select = ({values, selected, setSelected, label, setSearch, filter}) => {
     const [isActive, setIsActive] = useState(false)
@@ -22,12 +23,13 @@ const Select = ({values, selected, setSelected, label, setSearch, filter}) => {
                            placeholder={"Поиск"}/>
                     {values.length !== 0
                         ? values.map(elem => (
-                            <div className={`select_component-field-line ${selected === elem ? "selected" : null}`}
-                                 onClick={() => {
-                                     setSelected(elem);
-                                     setIsActive(false)
-                                 }}
-                            >{elem}</div>))
+                            <Link to={`/${elem.toLowerCase()}`}
+                                  className={`select_component-field-line ${selected === elem ? "selected" : null}`}
+                                  onClick={() => {
+                                      setSelected(elem);
+                                      setIsActive(false)
+                                  }}
+                            >{elem}</Link>))
                         : <div className={"select_component-field-line"}>Найти <b>{`${filter}`}</b></div>
                     }
                 </div>

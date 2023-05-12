@@ -91,6 +91,9 @@
     background-color: rgba(254, 254, 254, 1);
     border-radius: 8px;
     cursor: pointer;
+    display: block;
+    text-decoration: none;
+    color: #101011;
 }
 
 .select_component-field-line:hover,

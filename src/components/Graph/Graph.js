@@ -10,8 +10,6 @@ import {
     Title,
     Tooltip
 } from "chart.js";
-import {useEffect, useState} from "react";
-import axios from "axios";
 
 
 ChartJS.register(
@@ -25,36 +23,43 @@ ChartJS.register(
     Legend
 );
 
-const Graph = ({mode, chart_id}) => {
-    const [costs, setCosts] = useState()
-    useEffect(() => {
-        axios({
-            method: 'GET',
-            url: `http://localhost:3010/api/${chart_id}_${mode}`
-        }).then(chart_data => {
-            console.log(chart_data.data);
-            setCosts(chart_data.data.costs)
-        })
-    },[mode])
-    console.log(costs)
+const Graph = ({x, y}) => {
     const options = {
         responsive: true,
-        aspectRatio: 1.5
+        aspectRatio: 1.5,
+        legend: {
+            display: false
+        },
+        tooltip: {},
+        hover: {
+            mode: 'nearest',
+            intersect: true
+        },
+        // plugins: {
+        //     onHover: (chart, event, elements) => {
+        //         if (elements.length > 0) {
+        //             const index = elements[0].index;
+        //             const width = chart.chartArea.right - chart.chartArea.left;
+        //             const x = chart.chartArea.left + (width / chart.data.labels.length) * index;
+        //
+        //             chart.ctx.beginPath();
+        //             chart.ctx.moveTo(x, chart.chartArea.top);
+        //             chart.ctx.strokeStyle = '#000';
+        //             chart.ctx.lineTo(x, chart.chartArea.bottom);
+        //             chart.ctx.stroke();
+        //         }
+        //     },
+        //     onMouseOut: (chart, event) => {
+        //         chart.ctx.clearRect(0, 0, chart.width, chart.height);
+        //     }
+        // }
     };
-    const k = Array(20)
-    for (let i = 0; i < 20; i++) {
-        k[i] = i;
-    }
-    const g = Array(20)
-    for (let i = 0; i < 20; i++) {
-        g[i] = Math.floor(Math.random()*1000);
-    }
     const data = {
-        labels: k,
+        labels: x,
         datasets: [
             {
                 fill: true,
-                data: g, //costs,//
+                data: y,
                 borderColor: 'rgb(53, 162, 235)',
                 backgroundColor: 'rgba(53, 162, 235, 0.5)',
                 pointRadius: 1,

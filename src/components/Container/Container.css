@@ -2,3 +2,21 @@
     max-width: 1147px;
     margin: 0 auto;
 }
+
+@media (max-width: 1100px) {
+    .container {
+        max-width: 900px;
+    }
+}
+
+@media (max-width: 900px) {
+    .container {
+        max-width: 700px;
+    }
+}
+
+@media (max-width: 700px) {
+    .container {
+        max-width: 95%;
+    }
+}

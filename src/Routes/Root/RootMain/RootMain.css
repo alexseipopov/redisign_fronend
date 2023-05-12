@@ -94,3 +94,25 @@ h2 {
     align-items: center;
     padding: 20px;
 }
+
+@media (max-width: 1100px) {
+    .root_main-img {
+        opacity: 0.5;
+        margin-right: -50px;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+    h1 {
+        font-size: 34px;
+    }
+    .root_main-intro {
+        font-size: 16px;
+    }
+    /*.root_main-table {*/
+    /*    overflow: scroll;*/
+    /*    width: 1000px;*/
+    /*}*/
+}

@@ -1,6 +1,6 @@
 import './RootMain.css'
 import Container from "../../../components/Container/Container";
-import intro_img from './../../../static/intro.png'
+import intro_img from './../../../static/intro3.png'
 import {useEffect, useState} from "react";
 import Loader from "../../../components/Loader/Loader";
 import axios from "axios";

@@ -3,7 +3,7 @@ import {useState} from "react";
 import arrow_up from './../../static/arrow_up.svg'
 import arrow_down from './../../static/arrow_down.svg'
 
-const Select = ({values, selected, setSelected, label}) => {
+const Select = ({values, selected, setSelected, label, setSearch, filter}) => {
     const [isActive, setIsActive] = useState(false)
     const toggleActive = () => {
         setIsActive(!isActive)
@@ -18,11 +18,18 @@ const Select = ({values, selected, setSelected, label}) => {
             <div className={`select_component-listener ${isActive ? 'active' : null}`} onClick={toggleActive}></div>
             <div className={`select_component-list ${isActive ? 'active' : null}`}>
                 <div className="select_component-field">
-                    {values.map(elem => (
-                        <div className={`select_component-field-line ${selected === elem ? "selected" : null}`}
-                             onClick={() => {setSelected(elem); setIsActive(false)}}
-                        >{elem}</div>
-                    ))}
+                    <input onChange={e => setSearch(e.target.value)} className={"select_component-search"} type={"text"}
+                           placeholder={"Поиск"}/>
+                    {values.length !== 0
+                        ? values.map(elem => (
+                            <div className={`select_component-field-line ${selected === elem ? "selected" : null}`}
+                                 onClick={() => {
+                                     setSelected(elem);
+                                     setIsActive(false)
+                                 }}
+                            >{elem}</div>))
+                        : <div className={"select_component-field-line"}>Найти <b>{`${filter}`}</b></div>
+                    }
                 </div>
             </div>
         </div>

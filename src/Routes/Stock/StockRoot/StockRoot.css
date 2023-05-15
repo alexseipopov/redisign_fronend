@@ -76,6 +76,9 @@
     font-weight: 600;
     color: #0BC296;
 }
+.graph-dynamic.downgrade {
+    color: #E24D56;
+}
 
 .summary-wrapper {
     position: relative;
@@ -170,6 +173,7 @@
 
 .graph {
     margin-top: 32px;
+    position: relative;
 }
 
 
@@ -189,6 +193,19 @@
     display: flex;
     align-items: center;
 }
+.summary-value.stonks.downgrade {
+    color: #E24D56;
+}
 .summary-value > img {
     margin-right: 5px;
+}
+.graph-loader {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

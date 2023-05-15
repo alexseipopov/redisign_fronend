@@ -3,12 +3,14 @@ import Container from "../../../components/Container/Container";
 import Select from "../../../components/Select/Select";
 import {useEffect, useState} from "react";
 import upgrade from './../../../static/upgrade.svg'
-import downgrade from './../../../static/upgrade.svg'
+import downgrade from './../../../static/downgrade.svg'
 import Graph from "../../../components/Graph/Graph";
 import axios from "axios";
 import Document from "../../../components/Document/Document";
+import Loader from "../../../components/Loader/Loader";
 
 const StockRoot = ({id}) => {
+    const [loadingGraph, setLoadingGraph] = useState(false)
     const [stocks, setStocks] = useState([])
     const [selected, setSelected] = useState(id.toUpperCase())
     const [filter, setFilter] = useState("goog")
@@ -20,6 +22,7 @@ const StockRoot = ({id}) => {
     const [about, setAbout] = useState("")
     const [documents, setDocuments] = useState([])
     const [option, setOption] = useState(0)
+    const [metrics, setMetrics] = useState({})
 
     useEffect(() => {
         setResult(stocks.filter(elem => elem.includes(filter.toUpperCase())))
@@ -41,6 +44,7 @@ const StockRoot = ({id}) => {
     const [graphDataX, setGraphDataX] = useState([])
     const [graphDataY, setGraphDataY] = useState([])
     useEffect(() => {
+        setLoadingGraph(true)
         console.log("chart", id)
         axios(`http://localhost:3010/api/${id}_${mode}`)
             .then(data => {
@@ -49,7 +53,11 @@ const StockRoot = ({id}) => {
                 setAbout(data.data.about)
                 setDocuments(data.data.document)
                 setOption(0)
+                setMetrics(data.data.metrics)
                 console.log("?", data.data)
+            })
+            .finally(() => {
+                setLoadingGraph(false)
             })
     }, [mode, id])
     const changeMode = (elem) => {
@@ -74,15 +82,22 @@ const StockRoot = ({id}) => {
                             <div className={"graph-stat"}>
                                 <div className={"graph-short-summary"}>
                                     <div className={"graph-last_date"}>
-                                        Последнее значение <span>12.04.2012</span>
+                                        Последнее значение <span>{metrics.last_date}</span>
                                     </div>
                                     <div className={"graph-price-block"}>
                                         <div className={"graph-price"}>
-                                            141,49
+                                            {metrics.level}
                                         </div>
-                                        <div className={"graph-dynamic"}>
-                                            <img src={upgrade} alt={"upgrade"}/>
-                                            0.45 (0.32%)
+                                        <div className={`graph-dynamic ${(metrics.level - metrics.prev_level).toFixed(2) > 0
+                                        ? ""
+                                        : "downgrade"
+                                        }`}>
+                                            <img src={
+                                                (metrics.level - metrics.prev_level).toFixed(2) > 0
+                                                    ? upgrade
+                                                    : downgrade
+                                            } alt={"upgrade"}/>
+                                            {Math.abs(metrics.level - metrics.prev_level).toFixed(2)} ({metrics.last_delta}%)
                                         </div>
                                     </div>
                                 </div>
@@ -94,6 +109,7 @@ const StockRoot = ({id}) => {
                                 </div>
                             </div>
                             <div className={"graph"}>
+                                {loadingGraph ? <div className={"graph-loader"}><Loader /></div> : <></>}
                                 <Graph y={graphDataX} x={graphDataY}/>
                             </div>
                         </div>
@@ -101,28 +117,36 @@ const StockRoot = ({id}) => {
                             <div className={'summary-wrapper'}>
                                 <div className={"summary"}>
                                     <div className={'summary-row'}>
-                                        <div className={"summary-title"}>Предыдущее значение (04.04.2023)</div>
-                                        <div className={"summary-value"}>141.49</div>
+                                        <div className={"summary-title"}>Предыдущее значение ({metrics.prev_date})</div>
+                                        <div className={"summary-value"}>{metrics.prev_level}</div>
                                     </div>
                                     <div className={'summary-row'}>
                                         <div className={"summary-title"}>Изменение за неделю</div>
-                                        <div className={"summary-value stonks"}><img src={upgrade} alt={"stonks"}/>0.45
-                                            (0.32%)
+                                        <div className={`summary-value stonks ${metrics.week_delta_val > 0 ? "" : "downgrade"}`}><img src={
+                                            metrics.week_delta_val > 0
+                                                ? upgrade
+                                                : downgrade
+                                        } alt={"stonks"}/>{Math.abs(metrics.week_delta_val)}
+                                            ({metrics.week_delta}%)
                                         </div>
                                     </div>
                                     <div className={'summary-row'}>
                                         <div className={"summary-title"}>Изменение с начала года</div>
-                                        <div className={"summary-value stonks"}><img src={upgrade} alt={"stonks"}/>0.45
-                                            (0.32%)
+                                        <div className={"summary-value stonks"}><img src={
+                                            metrics.year_delta_val > 0
+                                                ? upgrade
+                                                : downgrade
+                                        } alt={"stonks"}/>{Math.abs(metrics.year_delta_val)}
+                                            ({metrics.year_delta}%)
                                         </div>
                                     </div>
                                     <div className={'summary-row'}>
-                                        <div className={"summary-title"}>Максимум за последний год (04.04.2023)</div>
-                                        <div className={"summary-value"}>141.49</div>
+                                        <div className={"summary-title"}>Максимум за последний год ({metrics.last_year})</div>
+                                        <div className={"summary-value"}>{metrics.max_level}</div>
                                     </div>
                                     <div className={'summary-row'}>
-                                        <div className={"summary-title"}>Минимум за последний год (04.04.2023)</div>
-                                        <div className={"summary-value"}>141.49</div>
+                                        <div className={"summary-title"}>Минимум за последний год ({metrics.last_year})</div>
+                                        <div className={"summary-value"}>{metrics.min_level}</div>
                                     </div>
                                 </div>
                             </div>

@@ -23,6 +23,7 @@ const RootMain = () => {
                 setLoader(false)
             })
     }, [])
+    let i = 0
     return (
         <main>
             <Container>
@@ -41,7 +42,7 @@ const RootMain = () => {
                             </p>
                         </div>
                         <div className={'root_main-img'}>
-                            <img src={intro_img} alt={'intro image'}/>
+                            <img src={intro_img} alt={'intro'}/>
                         </div>
                     </div>
                     <div className={'main_root-indexes'}>
@@ -57,14 +58,15 @@ const RootMain = () => {
                                 ? <div className={"root_main-table_row root_main-table_row-loader"}>
                                     <Loader/>
                                 </div>
-                                : indexes.map(elem => (
-                                    <Link to={`${elem.url}`} className={'root_main-table_row'}>
+                                : indexes.map(elem => {
+                                    i++
+                                    return <Link key={i} to={`${elem.url}`} className={'root_main-table_row'}>
                                         <div className={"root_main-symbol"}>{elem.text}</div>
                                         <div className={"root_main-name"}>{elem.title}</div>
                                         <div className={"root_main-isin"}>{elem.isin}</div>
                                         <div className={"root_main-value"}>{elem.level}</div>
                                     </Link>
-                                ))}
+                                })}
                         </div>
                     </div>
                 </div>

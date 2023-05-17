@@ -1,7 +1,7 @@
 import './StockRoot.css'
 import Container from "../../../components/Container/Container";
 import Select from "../../../components/Select/Select";
-import {useEffect, useId, useMemo, useState} from "react";
+import {useEffect, useState} from "react";
 import upgrade from './../../../static/upgrade.svg'
 import downgrade from './../../../static/downgrade.svg'
 import Graph from "../../../components/Graph/Graph";
@@ -15,7 +15,7 @@ const StockRoot = ({id}) => {
     const [selected, setSelected] = useState(id.toUpperCase())
     const [filter, setFilter] = useState("goog")
     const [result, setResult] = useState([])
-    const [modes, setModes] = useState(["1M", "3M", "6M", "1Y", "2Y", "5Y", "10Y"])
+    const modes = ["1M", "3M", "6M", "1Y", "2Y", "5Y", "10Y"]
     const [modesSelected, setModesSelected] = useState(modes[0])
     const [mode, setMode] = useState("1mo")
     const [title, setTitle] = useState("")
@@ -27,7 +27,7 @@ const StockRoot = ({id}) => {
     useEffect(() => {
         setResult(stocks.filter(elem => elem.includes(filter.toUpperCase())))
         console.log('here')
-    }, [filter])
+    }, [filter, stocks])
     useEffect(() => {
         axios("/api/get_all_index")
             .then(data => {
@@ -37,6 +37,7 @@ const StockRoot = ({id}) => {
                         console.log("===", elem)
                         setTitle(elem.title)
                     }
+                    return undefined
                 })
                 setFilter("")
             })

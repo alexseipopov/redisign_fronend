@@ -47,26 +47,28 @@ const RootMain = () => {
                     </div>
                     <div className={'main_root-indexes'}>
                         <h2>Индексы</h2>
-                        <div className={'root_main-table'}>
-                            <div className={'root_main-table_head'}>
-                                <div className={"root_main-symbol"}>Символ</div>
-                                <div className={"root_main-name"}>Название</div>
-                                <div className={"root_main-isin"}>ISIN</div>
-                                <div className={"root_main-value"}>Значение</div>
-                            </div>
-                            {loader
-                                ? <div className={"root_main-table_row root_main-table_row-loader"}>
-                                    <Loader/>
+                        <div className={'table-container'}>
+                            <div className={'root_main-table'}>
+                                <div className={'root_main-table_head'}>
+                                    <div className={"root_main-symbol"}>Символ</div>
+                                    <div className={"root_main-name"}>Название</div>
+                                    <div className={"root_main-isin"}>ISIN</div>
+                                    <div className={"root_main-value"}>Значение</div>
                                 </div>
-                                : indexes.map(elem => {
-                                    i++
-                                    return <Link key={i} to={`${elem.url}`} className={'root_main-table_row'}>
-                                        <div className={"root_main-symbol"}>{elem.text}</div>
-                                        <div className={"root_main-name"}>{elem.title}</div>
-                                        <div className={"root_main-isin"}>{elem.isin}</div>
-                                        <div className={"root_main-value"}>{elem.level}</div>
-                                    </Link>
-                                })}
+                                {loader
+                                    ? <div className={"root_main-table_row root_main-table_row-loader"}>
+                                        <Loader/>
+                                    </div>
+                                    : indexes.map(elem => {
+                                        i++
+                                        return <Link key={i} to={`${elem.url}`} className={'root_main-table_row'}>
+                                            <div className={"root_main-symbol"}>{elem.text}</div>
+                                            <div className={"root_main-name"}>{elem.title}</div>
+                                            <div className={"root_main-isin"}>{elem.isin}</div>
+                                            <div className={"root_main-value"}>{elem.level}</div>
+                                        </Link>
+                                    })}
+                            </div>
                         </div>
                     </div>
                 </div>

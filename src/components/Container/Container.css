@@ -20,3 +20,9 @@
         max-width: 95%;
     }
 }
+
+@media (max-width: 550px) {
+    .container {
+        max-width: 90%;
+    }
+}

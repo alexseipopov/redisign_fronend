@@ -10,3 +10,9 @@
     font-weight: 400;
     color: #7E8088;
 }
+
+@media (max-width: 550px) {
+    .footer-content {
+        width: 230px;
+    }
+}

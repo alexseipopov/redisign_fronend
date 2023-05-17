@@ -11,10 +11,13 @@ const RootMain = () => {
     const [loader, setLoader] = useState(false)
     useEffect(() => {
         setLoader(true)
-        axios("http://localhost:3010/api/get_all_index")
+        axios("/api/get_all_index")
             .then(data => {
                 console.log(data.data)
                 setIndexes(data.data)
+            })
+            .catch((e) => {
+                console.log(e)
             })
             .finally(() => {
                 setLoader(false)

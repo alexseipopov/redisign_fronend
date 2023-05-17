@@ -1,7 +1,7 @@
 import './StockRoot.css'
 import Container from "../../../components/Container/Container";
 import Select from "../../../components/Select/Select";
-import {useEffect, useState} from "react";
+import {useEffect, useId, useMemo, useState} from "react";
 import upgrade from './../../../static/upgrade.svg'
 import downgrade from './../../../static/downgrade.svg'
 import Graph from "../../../components/Graph/Graph";
@@ -29,7 +29,7 @@ const StockRoot = ({id}) => {
         console.log('here')
     }, [filter])
     useEffect(() => {
-        axios("http://localhost:3010/api/get_all_index")
+        axios("/api/get_all_index")
             .then(data => {
                 setStocks(data.data.map(elem => elem.text))
                 data.data.map(elem => {
@@ -46,7 +46,7 @@ const StockRoot = ({id}) => {
     useEffect(() => {
         setLoadingGraph(true)
         console.log("chart", id)
-        axios(`http://localhost:3010/api/${id}_${mode}`)
+        axios(`/api/${id}_${mode}`)
             .then(data => {
                 setGraphDataX(data.data.costs)
                 setGraphDataY(data.data.labels)
@@ -65,6 +65,7 @@ const StockRoot = ({id}) => {
         const res = elem.replace("M", "mo").replace("Y", 'y')
         setMode(res)
     }
+    let i = 0
     return (
         <main>
             <Container>
@@ -102,10 +103,11 @@ const StockRoot = ({id}) => {
                                     </div>
                                 </div>
                                 <div className={"graph-nav"}>
-                                    {modes.map(elem => (
-                                        <p className={`graph-nav-elem ${elem === modesSelected ? 'active' : ''}`}
+                                    {modes.map((elem) => {
+                                        i++
+                                        return <p key={i} className={`graph-nav-elem ${elem === modesSelected ? 'active' : ''}`}
                                            onClick={e => changeMode(e.target.textContent)}>{elem}</p>
-                                    ))}
+                                    })}
                                 </div>
                             </div>
                             <div className={"graph"}>

@@ -30,7 +30,7 @@ const Select = ({values, selected, setSelected, label, setSearch, filter}) => {
                                       setIsActive(false)
                                   }}
                             >{elem}</Link>))
-                        : <div className={"select_component-field-line"}>Найти <b>{`${filter}`}</b></div>
+                        : <div className={"select_component-field-line"}>Не найдено <b>{`${filter}`}</b></div>
                     }
                 </div>
             </div>

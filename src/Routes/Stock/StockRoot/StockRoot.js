@@ -10,19 +10,33 @@ import Document from "../../../components/Document/Document";
 import Loader from "../../../components/Loader/Loader";
 
 const StockRoot = ({id}) => {
+    const modes = ["1M", "3M", "6M", "1Y", "2Y", "5Y", "10Y"]
+
     const [loadingGraph, setLoadingGraph] = useState(false)
     const [stocks, setStocks] = useState([])
     const [selected, setSelected] = useState(id.toUpperCase())
     const [filter, setFilter] = useState("goog")
     const [result, setResult] = useState([])
-    const modes = ["1M", "3M", "6M", "1Y", "2Y", "5Y", "10Y"]
     const [modesSelected, setModesSelected] = useState(modes[0])
     const [mode, setMode] = useState("1mo")
     const [title, setTitle] = useState("")
     const [about, setAbout] = useState("")
     const [documents, setDocuments] = useState([])
     const [option, setOption] = useState(0)
-    const [metrics, setMetrics] = useState({})
+    const [metrics, setMetrics] = useState({
+        level: "",
+        last_date: "",
+        prev_level: "",
+        last_delta: "",
+        prev_date: "",
+        week_delta_val: "",
+        year_delta_val: "",
+        year_delta: "",
+        max_level: "",
+        min_level: "",
+        min_date: "00.00.0000",
+        max_date: "00.00.0000"
+    })
 
     useEffect(() => {
         setResult(stocks.filter(elem => elem.includes(filter.toUpperCase())))
@@ -144,11 +158,11 @@ const StockRoot = ({id}) => {
                                         </div>
                                     </div>
                                     <div className={'summary-row'}>
-                                        <div className={"summary-title"}>Максимум за последний год ({metrics.last_year})</div>
+                                        <div className={"summary-title"}>Максимум за последний год ({metrics.max_date})</div>
                                         <div className={"summary-value"}>{metrics.max_level}</div>
                                     </div>
                                     <div className={'summary-row'}>
-                                        <div className={"summary-title"}>Минимум за последний год ({metrics.last_year})</div>
+                                        <div className={"summary-title"}>Минимум за последний год ({metrics.min_date})</div>
                                         <div className={"summary-value"}>{metrics.min_level}</div>
                                     </div>
                                 </div>

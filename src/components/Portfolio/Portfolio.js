@@ -6,7 +6,7 @@ import Plot from 'react-plotly.js'
 const Portfolio = ({name}) => {
     const [data, setData] = useState([])
     const [pieData, setPieData] = useState({})
-    const [weightPieData, setWeightPieData] = useState([])
+    const [weightPieData, setWeightPieData] = useState({})
     const [date, setDate] = useState(new Date().toISOString().slice(0, 10))
     const [pieGraph, setPieGraph] = useState(700)
     const [onload, setOnload] = useState(false)
@@ -39,43 +39,39 @@ const Portfolio = ({name}) => {
         labelPie.push(key)
         valuePie.push(pieData[key])
     }
-    console.log(valuePie, labelPie)
 
-    const [hoveredSegment, setHoveredSegment] = useState(null);
-
-    const handleHover = (event) => {
-        console.log("woorrk", event.points[0].curveNumber)
-        setHoveredSegment(event.points[0].curveNumber);
-    };
-
-    const handleUnhover = () => {
-        setHoveredSegment(null);
-    };
+    const valueWightPie = []
+    const labelWightPie = []
+    for (let key in weightPieData) {
+        labelWightPie.push(key)
+        valueWightPie.push(weightPieData[key])
+    }
 
     const pie1 = [
         {
             values: valuePie,
             labels: labelPie,
             hole: .73,
-            hoverinfo: 'label',
             type: 'pie',
             domain: {column: 0},
             marker: {
                 colors: ["#7086E3", "#58CCB0", "#E8743B", "#93BFEB", "#F2CC68", "#ADBCC3"],
             },
-            textinfo: 'none'
+            textinfo: 'none',
+            hoverinfo: "label+percent",
         }
     ]
     const pie2 = [
         {
-            values: weightPieData,
+            values: valueWightPie,
+            labels: labelWightPie,
             hole: .73,
-            hoverinfo: 'label',
             type: 'pie',
             domain: {column: 0},
             marker: {
                 colors: ["#7086E3", "#58CCB0", "#E8743B", "#93BFEB", "#F2CC68", "#ADBCC3"]
             },
+            hoverinfo: "label+percent",
             textinfo: 'none'
         }
     ]
@@ -120,10 +116,10 @@ const Portfolio = ({name}) => {
             <input className={`portfolio-date`} type="date" value={date} onChange={e => setDate(e.target.value)}/>
             <div className={`pie-graphs`}>
                 <div className="pie-graph">
-                    <Plot data={pie1} layout={layout1} onHover={handleHover} onUnhover={handleUnhover}/>
+                    <Plot data={pie1} layout={layout1}/>
                 </div>
                 <div className="pie-graph">
-                    <Plot data={pie2} layout={layout2} onHover={handleHover} onUnhover={handleUnhover}/>
+                    <Plot data={pie2} layout={layout2}/>
                 </div>
             </div>
             <div className={"portfolio-table"}>

@@ -11,7 +11,8 @@ const RootMain = () => {
     const [loader, setLoader] = useState(false)
     useEffect(() => {
         setLoader(true)
-        axios("/api/get_all_index")
+        console.log("Root Main")
+        axios("/api/get_all_portfolio")
             .then(data => {
                 console.log(data.data)
                 setIndexes(data.data)

@@ -8,13 +8,14 @@ import Graph from "../../../components/Graph/Graph";
 import axios from "axios";
 import Document from "../../../components/Document/Document";
 import Loader from "../../../components/Loader/Loader";
+import Portfolio from "../../../components/Portfolio/Portfolio";
 
-const StockRoot = ({id}) => {
+const StockRoot = ({name}) => {
     const modes = ["1M", "3M", "6M", "1Y", "2Y", "5Y", "10Y"]
 
     const [loadingGraph, setLoadingGraph] = useState(false)
     const [stocks, setStocks] = useState([])
-    const [selected, setSelected] = useState(id.toUpperCase())
+    const [selected, setSelected] = useState(name.toUpperCase())
     const [filter, setFilter] = useState("goog")
     const [result, setResult] = useState([])
     const [modesSelected, setModesSelected] = useState(modes[0])
@@ -35,7 +36,34 @@ const StockRoot = ({id}) => {
         max_level: "",
         min_level: "",
         min_date: "00.00.0000",
-        max_date: "00.00.0000"
+        max_date: "00.00.0000",
+
+        last_value: {
+            value: "",
+            date: "00.00.0000"
+        },
+        previous_value: {
+            value: "",
+            date: "",
+            delta: "",
+            delta_percent: ""
+        },
+        last_week: {
+            value: "",
+            delta_percent: ""
+        },
+        last_year: {
+            value: "",
+            delta_percent: ""
+        },
+        min_year: {
+            value: "",
+            date: "00.00.0000"
+        },
+        max_year: {
+            value: "",
+            date: "00.00.0000"
+        }
     })
 
     useEffect(() => {
@@ -43,11 +71,11 @@ const StockRoot = ({id}) => {
         console.log('here')
     }, [filter, stocks])
     useEffect(() => {
-        axios("/api/get_all_index")
+        axios("/api/get_all_portfolio")
             .then(data => {
                 setStocks(data.data.map(elem => elem.text))
                 data.data.map(elem => {
-                    if (elem.text === id.toUpperCase()) {
+                    if (elem.text === name.toUpperCase()) {
                         console.log("===", elem)
                         setTitle(elem.title)
                     }
@@ -55,13 +83,20 @@ const StockRoot = ({id}) => {
                 })
                 setFilter("")
             })
-    }, [id])
+    }, [name])
+    console.warn(title)
     const [graphDataX, setGraphDataX] = useState([])
     const [graphDataY, setGraphDataY] = useState([])
     useEffect(() => {
         setLoadingGraph(true)
-        console.log("chart", id)
-        axios(`/api/${id}_${mode}`)
+        console.log("chart", name)
+        axios(`/api/get_portfolio_graph`, {
+            data: {
+                portfolio: name,
+                interval: mode
+            },
+            method: "POST"
+        })
             .then(data => {
                 setGraphDataX(data.data.costs)
                 setGraphDataY(data.data.labels)
@@ -74,7 +109,7 @@ const StockRoot = ({id}) => {
             .finally(() => {
                 setLoadingGraph(false)
             })
-    }, [mode, id])
+    }, [mode, name])
     const changeMode = (elem) => {
         setModesSelected(elem)
         const res = elem.replace("M", "mo").replace("Y", 'y')
@@ -98,35 +133,37 @@ const StockRoot = ({id}) => {
                             <div className={"graph-stat"}>
                                 <div className={"graph-short-summary"}>
                                     <div className={"graph-last_date"}>
-                                        Последнее значение <span>{metrics.last_date}</span>
+                                        Последнее значение <span>{metrics.last_value.date}</span>
                                     </div>
                                     <div className={"graph-price-block"}>
                                         <div className={"graph-price"}>
-                                            {metrics.level}
+                                            {metrics.last_value.value}
                                         </div>
-                                        <div className={`graph-dynamic ${(metrics.level - metrics.prev_level).toFixed(2) > 0
-                                        ? ""
-                                        : "downgrade"
-                                        }`}>
+                                        <div
+                                            className={`graph-dynamic ${Number(metrics.previous_value.delta).toFixed(2) > 0
+                                                ? ""
+                                                : "downgrade"
+                                            }`}>
                                             <img src={
-                                                (metrics.level - metrics.prev_level).toFixed(2) > 0
+                                                Number(metrics.previous_value.delta).toFixed(2) > 0
                                                     ? upgrade
                                                     : downgrade
                                             } alt={"upgrade"}/>
-                                            {Math.abs(metrics.level - metrics.prev_level).toFixed(2)} ({metrics.last_delta}%)
+                                            {Math.abs(Number(metrics.previous_value.delta)).toFixed(2)} ({Number(metrics.previous_value.delta_percent).toFixed(2)}%)
                                         </div>
                                     </div>
                                 </div>
                                 <div className={"graph-nav"}>
                                     {modes.map((elem) => {
                                         i++
-                                        return <p key={i} className={`graph-nav-elem ${elem === modesSelected ? 'active' : ''}`}
-                                           onClick={e => changeMode(e.target.textContent)}>{elem}</p>
+                                        return <p key={i}
+                                                  className={`graph-nav-elem ${elem === modesSelected ? 'active' : ''}`}
+                                                  onClick={e => changeMode(e.target.textContent)}>{elem}</p>
                                     })}
                                 </div>
                             </div>
                             <div className={"graph"}>
-                                {loadingGraph ? <div className={"graph-loader"}><Loader /></div> : <></>}
+                                {loadingGraph ? <div className={"graph-loader"}><Loader/></div> : <></>}
                                 <Graph y={graphDataX} x={graphDataY}/>
                             </div>
                         </div>
@@ -134,58 +171,66 @@ const StockRoot = ({id}) => {
                             <div className={'summary-wrapper'}>
                                 <div className={"summary"}>
                                     <div className={'summary-row'}>
-                                        <div className={"summary-title"}>Предыдущее значение ({metrics.prev_date})</div>
-                                        <div className={"summary-value"}>{metrics.prev_level}</div>
+                                        <div className={"summary-title"}>Предыдущее значение ({metrics.previous_value.date})</div>
+                                        <div className={"summary-value"}>{metrics.previous_value.value}</div>
                                     </div>
                                     <div className={'summary-row'}>
                                         <div className={"summary-title"}>Изменение за неделю</div>
-                                        <div className={`summary-value stonks ${metrics.week_delta_val > 0 ? "" : "downgrade"}`}><img src={
-                                            metrics.week_delta_val > 0
-                                                ? upgrade
-                                                : downgrade
-                                        } alt={"stonks"}/>{Math.abs(metrics.week_delta_val)}
-                                            ({metrics.week_delta}%)
+                                        <div
+                                            className={`summary-value stonks ${Number(metrics.last_week.delta_percent) > 0 ? "" : "downgrade"}`}>
+                                            <img src={
+                                                Number(metrics.last_week.delta_percent) > 0
+                                                    ? upgrade
+                                                    : downgrade
+                                            } alt={"stonks"}/>{Math.abs(Number(metrics.last_value.value))}
+                                            ({Number(metrics.last_week.delta_percent).toFixed(2)}%)
                                         </div>
                                     </div>
                                     <div className={'summary-row'}>
                                         <div className={"summary-title"}>Изменение с начала года</div>
-                                        <div className={"summary-value stonks"}><img src={
-                                            metrics.year_delta_val > 0
+                                        <div className={`summary-value stonks ${Number(metrics.last_year.delta) > 0 ? "" : "downgrade"}`}><img src={
+                                            Number(metrics.last_year.delta) > 0
                                                 ? upgrade
                                                 : downgrade
-                                        } alt={"stonks"}/>{Math.abs(metrics.year_delta_val)}
-                                            ({metrics.year_delta}%)
+                                        } alt={"stonks"}/>{Math.abs(Number(metrics.last_year.delta))}
+                                            ({Number(metrics.last_year.delta_percent).toFixed(2)}%)
                                         </div>
                                     </div>
                                     <div className={'summary-row'}>
-                                        <div className={"summary-title"}>Максимум за последний год ({metrics.max_date})</div>
-                                        <div className={"summary-value"}>{metrics.max_level}</div>
+                                        <div className={"summary-title"}>Максимум за последний год
+                                            ({metrics.max_year.date})
+                                        </div>
+                                        <div className={"summary-value"}>{metrics.max_year.value}</div>
                                     </div>
                                     <div className={'summary-row'}>
-                                        <div className={"summary-title"}>Минимум за последний год ({metrics.min_date})</div>
-                                        <div className={"summary-value"}>{metrics.min_level}</div>
+                                        <div className={"summary-title"}>Минимум за последний год ({metrics.min_year.date})
+                                        </div>
+                                        <div className={"summary-value"}>{metrics.min_year.value}</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className={"root_stock-description"}>
-                            {documents.length === 0
-                                ? <div className={"solo-option"}>
+
+                            <div className={"root_stock-option"}>
+                                <div
+                                    onClick={() => setOption(0)}
+                                    className={`root_stock-option-btn description ${option === 0 ? "active" : ""}`}>
                                     Описание
                                 </div>
-                                :
-                                <div className={"root_stock-option"}>
-                                    <div
-                                        onClick={() => setOption(0)}
-                                        className={`root_stock-option-btn description ${option === 0 ? "active" : ""}`}>
-                                        Описание
-                                    </div>
-                                    <div
-                                        onClick={() => setOption(1)}
-                                        className={`root_stock-option-btn documents ${option === 1 ? "active" : ""}`}>
-                                        Документы
-                                    </div>
+                                <div
+                                    onClick={() => setOption(1)}
+                                    className={`root_stock-option-btn documents ${option === 1 ? "active" : ""}`}>
+                                    Состав Портфеля
                                 </div>
+                            </div>
+                            {documents.length !== 0
+                                ? <div
+                                    onClick={() => setOption(2)}
+                                    className={`root_stock-option-btn documents ${option === 2 ? "active" : ""}`}>
+                                    Документы
+                                </div>
+                                : <></>
                             }
                             {option === 0 ?
                                 <div className={"description-details"}>
@@ -211,13 +256,14 @@ const StockRoot = ({id}) => {
                                         {about}
                                     </div>
                                 </div>
-                                :
-                                <div className={"documents-block"}>
-                                    {documents.map(elem => (
-                                            <Document elem={elem} id={id}/>
-                                        )
-                                    )}
-                                </div>
+                                : option === 1
+                                    ? <Portfolio name={name} />
+                                    : <div className={"documents-block"}>
+                                        {documents.map(elem => (
+                                                <Document elem={elem} name={name}/>
+                                            )
+                                        )}
+                                    </div>
                             }
 
 

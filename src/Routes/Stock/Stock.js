@@ -6,14 +6,14 @@ import {useParams} from "react-router-dom";
 import {useEffect} from "react";
 
 const Stock = () => {
-    const {id} = useParams()
+    const {name} = useParams()
     useEffect(() => {
-        document.title = `Rumberg | ${id.toUpperCase()} Index`
+        document.title = `Rumberg | ${name.toUpperCase()} Index`
     })
     return (
         <div className={`stock`}>
             <Header/>
-            <StockRoot id={id}/>
+            <StockRoot name={name}/>
             <Footer/>
         </div>
     )

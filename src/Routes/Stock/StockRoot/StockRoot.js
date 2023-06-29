@@ -24,6 +24,7 @@ const StockRoot = ({name}) => {
     const [about, setAbout] = useState("")
     const [documents, setDocuments] = useState([])
     const [option, setOption] = useState(0)
+    const [specialData, setSpecialData] = useState({})
     const [metrics, setMetrics] = useState({
         level: "",
         last_date: "",
@@ -108,6 +109,15 @@ const StockRoot = ({name}) => {
             })
             .finally(() => {
                 setLoadingGraph(false)
+            })
+        axios('/api/get_data_detail', {
+            data: {
+                portfolio: name
+            },
+            method: "POST"
+        })
+            .then(data => {
+                setSpecialData(data.data)
             })
     }, [mode, name])
     const changeMode = (elem) => {
@@ -236,20 +246,20 @@ const StockRoot = ({name}) => {
                                 <div className={"description-details"}>
                                     <div className={"description-fields"}>
                                         <div className={"description-row"}>
-                                            <div className={"description-key"}>Начало расчета</div>
-                                            <div className={"description-value"}>04.04.2022</div>
+                                            <div className={"description-key"}>Название</div>
+                                            <div className={"description-value"}>{specialData.name}</div>
+                                        </div>
+                                        <div className={"description-row"}>
+                                            <div className={"description-key"}>ISIN</div>
+                                            <div className={"description-value"}>{specialData.isin}</div>
+                                        </div>
+                                        <div className={"description-row"}>
+                                            <div className={"description-key"}>Описание</div>
+                                            <div className={"description-value"}>{specialData.description}</div>
                                         </div>
                                         <div className={"description-row"}>
                                             <div className={"description-key"}>Начало расчета</div>
-                                            <div className={"description-value"}>04.04.2022</div>
-                                        </div>
-                                        <div className={"description-row"}>
-                                            <div className={"description-key"}>Начало расчета</div>
-                                            <div className={"description-value"}>04.04.2022</div>
-                                        </div>
-                                        <div className={"description-row"}>
-                                            <div className={"description-key"}>Начало расчета</div>
-                                            <div className={"description-value"}>04.04.2022</div>
+                                            <div className={"description-value"}>{specialData.date}</div>
                                         </div>
                                     </div>
                                     <div className={"description-about"}>

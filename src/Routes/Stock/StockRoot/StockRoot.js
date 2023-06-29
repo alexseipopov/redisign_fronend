@@ -233,15 +233,16 @@ const StockRoot = ({name}) => {
                                     className={`root_stock-option-btn documents ${option === 1 ? "active" : ""}`}>
                                     Состав Портфеля
                                 </div>
+                                {documents.length !== 0
+                                    ? <div
+                                        onClick={() => setOption(2)}
+                                        className={`root_stock-option-btn documents ${option === 2 ? "active" : ""}`}>
+                                        Документы
+                                    </div>
+                                    : <></>
+                                }
                             </div>
-                            {documents.length !== 0
-                                ? <div
-                                    onClick={() => setOption(2)}
-                                    className={`root_stock-option-btn documents ${option === 2 ? "active" : ""}`}>
-                                    Документы
-                                </div>
-                                : <></>
-                            }
+
                             {option === 0 ?
                                 <div className={"description-details"}>
                                     <div className={"description-fields"}>

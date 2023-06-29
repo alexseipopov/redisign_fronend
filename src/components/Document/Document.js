@@ -3,7 +3,7 @@ import file from './../../static/file.svg'
 import download from './../../static/download.svg'
 import axios from "axios";
 
-const Document = ({elem, id}) => {
+const Document = ({elem, name}) => {
 
     const getFile = (chart_id, filename) => {
         console.log(chart_id, filename)
@@ -31,7 +31,7 @@ const Document = ({elem, id}) => {
         })
     }
     return (
-        <div onClick={() => getFile(id, elem)} className={"document-row"}>
+        <div onClick={() => getFile(name, elem)} className={"document-row"}>
             <img src={file} alt={"file img"}/>
             <div className={"document-info"}>
                 <div className={"document-name"}>{elem}</div>

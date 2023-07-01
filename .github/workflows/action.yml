@@ -1,0 +1,22 @@
+name: Build, push and deploy app
+on: [push]
+
+jobs:
+  build_and_push_docker_image:
+    name: Build and push to yc-cr
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Yandex CR Login
+        uses: yc-actions/yc-cr-login@v0.1-alpha
+        with:
+          yc-sa-json-credentials: ${{ secrets.YC_KEY }}
+      - name: Build image
+        env:
+          CR_REGISTRY: crpo63gr16fshqrmielj
+          CR_REPO: rmb_index_frontend
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t cr.yandex/$CR_REGISTRY/$CR_REPO:$IMAGE_TAG .
+          docker push -t cr.yandex/$CR_REGISTRY/$CR_REPO:$IMAGE_TAG

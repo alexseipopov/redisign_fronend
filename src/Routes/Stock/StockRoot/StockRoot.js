@@ -248,7 +248,7 @@ const StockRoot = ({name}) => {
                                     <div className={"description-fields"}>
                                         <div className={"description-row"}>
                                             <div className={"description-key"}>Название</div>
-                                            <div className={"description-value"}>{specialData.name}</div>
+                                            <div className={"description-value"}>{title}</div>
                                         </div>
                                         <div className={"description-row"}>
                                             <div className={"description-key"}>ISIN</div>

@@ -20,3 +20,18 @@ jobs:
         run: |
           docker build -t cr.yandex/$CR_REGISTRY/$CR_REPO:$IMAGE_TAG .
           docker push cr.yandex/$CR_REGISTRY/$CR_REPO:$IMAGE_TAG
+  deploy:
+    name: Deploy on server
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH connect and deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.PRIVATE_SSH_KEY }}
+          passphrase: ${{ secrets.PASSPHRASE }}
+          IMAGE_TAG: ${{ github.sha }}
+          script: |
+            docker pull cr.yandex/crpo63gr16fshqrmielj/rmb_index_frontend:$IMAGE_TAG
+            docker-compose up --no-deps -d frontend

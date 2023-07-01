@@ -255,16 +255,20 @@ const StockRoot = ({name}) => {
                                             <div className={"description-value"}>{specialData.isin}</div>
                                         </div>
                                         <div className={"description-row"}>
-                                            <div className={"description-key"}>Описание</div>
-                                            <div className={"description-value"}>{specialData.description}</div>
+                                            <div className={"description-key"}>Тикер</div>
+                                            <div className={"description-value"}>{name.toUpperCase()}</div>
                                         </div>
                                         <div className={"description-row"}>
                                             <div className={"description-key"}>Начало расчета</div>
                                             <div className={"description-value"}>{specialData.date}</div>
                                         </div>
                                     </div>
+                                    {/*<div className={"description-row"}>*/}
+                                    {/*    <div className={"description-key"}>Описание</div>*/}
+                                    {/*    <div className={"description-value"}>{specialData.description}</div>*/}
+                                    {/*</div>*/}
                                     <div className={"description-about"}>
-                                        {about}
+                                        {specialData.description}
                                     </div>
                                 </div>
                                 : option === 1

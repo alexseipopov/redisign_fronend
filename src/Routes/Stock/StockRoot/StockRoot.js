@@ -276,8 +276,6 @@ const StockRoot = ({name}) => {
                                         )}
                                     </div>
                             }
-
-
                         </div>
                     </div>
                 </div>

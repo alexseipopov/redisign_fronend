@@ -1,10 +1,12 @@
 main {
     flex-grow: 1;
 }
+
 .root_main-header {
     position: relative;
     /*height: 430px;*/
 }
+
 h1 {
     font-size: 50px;
     font-weight: 600;
@@ -12,17 +14,20 @@ h1 {
     margin-bottom: 24px;
     color: #101011;
 }
+
 .root_main-content {
     width: 600px;
     margin: 60px 0;
     /*position: absolute;*/
 }
+
 .root_main-intro {
     font-size: 18px;
     font-weight: 400;
     line-height: 26px;
     color: #101011;
 }
+
 .root_main-img {
     position: absolute;
     top: -100px;
@@ -30,24 +35,33 @@ h1 {
     z-index: -1;
     /*opacity: 0.5;*/
 }
+
 .root_main-img > img {
     width: 100%;
 }
+
 .main_root-indexes {
     margin: 35px 0;
 }
+
 h2 {
     font-weight: 600;
     font-size: 26px;
     line-height: 28px;
     margin-bottom: 24px;
 }
+
 .root_main-table {
     /*background-color: #7E8088;*/
     border-radius: 8px;
     border: 1px solid #E4E4EB;
     min-width: 969px;
 }
+
+.root_main-table::-webkit-scrollbar {
+    display: none;
+}
+
 .root_main-table_head {
     display: flex;
     width: 100%;
@@ -57,24 +71,30 @@ h2 {
     font-weight: 500;
     font-size: 14px;
 }
+
 .root_main-symbol,
 .root_main-name,
 .root_main-isin,
 .root_main-value {
     padding: 18px;
 }
+
 .root_main-symbol {
     width: 140px;
 }
+
 .root_main-name {
     width: 620px;
 }
+
 .root_main-isin {
     width: 170px;
 }
+
 .root_main-value {
     width: 230px;
 }
+
 .root_main-table_row {
     display: flex;
     width: 100%;
@@ -85,12 +105,15 @@ h2 {
     cursor: pointer;
     text-decoration: none;
 }
+
 .root_main-table_row:hover {
     background-color: #F5F6FA;
 }
+
 .root_main-table_row:not(:last-child) {
     border-bottom: 1px solid #E4E4EB;
 }
+
 .root_main-table_row-loader {
     display: flex;
     justify-content: center;
@@ -103,11 +126,15 @@ h2 {
     overflow: scroll;
 }
 
+.table-container::-webkit-scrollbar {
+    display: none;
+}
+
 @media (max-width: 1100px) {
     .root_main-img {
         opacity: 0.4;
         overflow: hidden;
-        height:200%;
+        height: 200%;
     }
 
 }
@@ -117,21 +144,26 @@ h2 {
     h1 {
         font-size: 34px;
     }
+
     .root_main-intro {
         font-size: 16px;
     }
+
     .root_main-img {
         width: 80%;
         right: 0;
         overflow: hidden;
     }
+
     .root_main-table {
         overflow: scroll;
         width: 100%;
     }
+
     .root_main-content {
         width: 85%;
     }
+
     .root_main-header {
 
     }
@@ -142,18 +174,22 @@ h2 {
         opacity: 1;
         width: 130%;
     }
+
     .root_main-img > img {
         width: 110%;
     }
+
     h1 {
         line-height: 34px;
         font-size: 34px;
         font-weight: 600;
     }
+
     .root_main-content {
         padding-top: 160px;
         margin-bottom: 40px;
     }
+
     .root_main-intro {
         font-weight: 400;
         font-size: 16px;

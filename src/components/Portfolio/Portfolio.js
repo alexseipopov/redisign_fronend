@@ -116,10 +116,14 @@ const Portfolio = ({name}) => {
             <input className={`portfolio-date`} type="date" value={date} onChange={e => setDate(e.target.value)}/>
             <div className={`pie-graphs`}>
                 <div className="pie-graph">
-                    <Plot data={pie1} layout={layout1}/>
+                    <Plot data={pie1} layout={layout1} config={{
+                        displayModeBar: false,
+                    }}/>
                 </div>
                 <div className="pie-graph">
-                    <Plot data={pie2} layout={layout2}/>
+                    <Plot data={pie2} layout={layout2} config={{
+                        displayModeBar: false,
+                    }}/>
                 </div>
             </div>
             <div className={"portfolio-table"}>
@@ -130,7 +134,7 @@ const Portfolio = ({name}) => {
                     <div className={"table__amount"}>Кол-во, шт</div>
                     <div className={"table__cost"}>Цена</div>
                     <div className={"table__price"}>Стоимость</div>
-                    <div className={"table__weight"}>Вес</div>
+                    <div className={"table__weight"}>Вес, %</div>
                 </div>
                 {data.map((el, i) => (
                     <div key={i} className={`portfolio-table_row`}>
@@ -140,7 +144,7 @@ const Portfolio = ({name}) => {
                         <div className={"table__amount"}>{el.amount}</div>
                         <div className={"table__cost"}>{el.cost}</div>
                         <div className={"table__price"}>{el.price}</div>
-                        <div className={"table__weight"}>{el.weight}</div>
+                        <div className={"table__weight"}>{(Number(el.weight) * 100).toFixed(2)}</div>
                     </div>
                 ))}
             </div>

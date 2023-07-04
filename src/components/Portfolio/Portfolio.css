@@ -60,7 +60,7 @@
 }
 
 .table__cost {
-    width: 15%;
+    width: 10%;
 }
 
 .table__weight {
@@ -68,5 +68,5 @@
 }
 
 .table__price {
-    width: 5%;
+    width: 10%;
 }

@@ -72,7 +72,7 @@ const StockRoot = ({name}) => {
         console.log('here')
     }, [filter, stocks])
     useEffect(() => {
-        axios("/api/get_all_portfolio")
+        axios("http://158.160.96.57:3010/api/get_all_portfolio")
             .then(data => {
                 setStocks(data.data.map(elem => elem.text))
                 data.data.map(elem => {
@@ -91,7 +91,7 @@ const StockRoot = ({name}) => {
     useEffect(() => {
         setLoadingGraph(true)
         console.log("chart", name)
-        axios(`/api/get_portfolio_graph`, {
+        axios(`http://158.160.96.57:3010/api/get_portfolio_graph`, {
             data: {
                 portfolio: name,
                 interval: mode
@@ -110,7 +110,7 @@ const StockRoot = ({name}) => {
             .finally(() => {
                 setLoadingGraph(false)
             })
-        axios('/api/get_data_detail', {
+        axios('http://158.160.96.57:3010/api/get_data_detail', {
             data: {
                 portfolio: name
             },

@@ -18,6 +18,7 @@ const RootMain = () => {
                 setIndexes(data.data | [])
             })
             .catch((e) => {
+                console.log("Error :(")
                 console.log(e)
             })
             .finally(() => {

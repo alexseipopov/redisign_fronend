@@ -14,6 +14,7 @@ const RootMain = () => {
         console.log("Root Main")
         axios("/api/get_all_portfolio")
             .then(data => {
+                console.log(data)
                 console.log(data.data)
                 setIndexes(data.data | [])
             })

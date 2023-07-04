@@ -221,7 +221,6 @@ const StockRoot = ({name}) => {
                             </div>
                         </div>
                         <div className={"root_stock-description"}>
-
                             <div className={"root_stock-option"}>
                                 <div
                                     onClick={() => setOption(0)}

@@ -16,7 +16,7 @@ const RootMain = () => {
             .then(data => {
                 console.log(data)
                 console.log(data.data)
-                setIndexes(data.data | [])
+                setIndexes(data.data)
             })
             .catch((e) => {
                 console.log("Error :(")

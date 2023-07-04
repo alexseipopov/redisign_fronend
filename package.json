@@ -41,5 +41,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://backend:3010/"
+  "proxy": "http://158.160.96.57:3010/"
 }

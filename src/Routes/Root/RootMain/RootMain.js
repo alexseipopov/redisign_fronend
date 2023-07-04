@@ -15,7 +15,7 @@ const RootMain = () => {
         axios("/api/get_all_portfolio")
             .then(data => {
                 console.log(data.data)
-                setIndexes(data.data)
+                setIndexes(data.data | [])
             })
             .catch((e) => {
                 console.log(e)

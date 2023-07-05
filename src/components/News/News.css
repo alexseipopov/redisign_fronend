@@ -1,0 +1,32 @@
+.news {
+    margin: 10px 0;
+    border-bottom: 1px solid #b7b7bd;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.news > h3 {
+    margin-bottom: 10px;
+}
+
+.news > p {
+    margin-bottom: 10px;
+}
+
+.news_date {
+    color: #9b9ca1;
+    font-size: 12px;
+    font-weight: 400;
+    /*margin-bottom: 10px;*/
+}
+
+.news_download {
+    cursor: pointer;
+    background-color: #0080BF;
+    border-radius: 6px;
+    padding: 10px 20px;
+    color: #FEFEFE;
+    margin-bottom: 10px;
+}

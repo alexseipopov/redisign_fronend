@@ -22,8 +22,8 @@ const Select = ({values, selected, setSelected, label, setSearch, filter}) => {
                     <input onChange={e => setSearch(e.target.value)} className={"select_component-search"} type={"text"}
                            placeholder={"Поиск"}/>
                     {values.length !== 0
-                        ? values.map(elem => (
-                            <Link to={`/${elem.toLowerCase()}`}
+                        ? values.map((elem, i) => (
+                            <Link key={i} to={`/${elem.toLowerCase()}`}
                                   className={`select_component-field-line ${selected === elem ? "selected" : null}`}
                                   onClick={() => {
                                       setSelected(elem);

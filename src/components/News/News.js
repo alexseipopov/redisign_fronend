@@ -5,7 +5,7 @@ const News = ({news}) => {
     const getFile = (id, filename) => {
         axios({
             method: "POST",
-            url: `/api/download_news`,
+            url: `http://158.160.96.57:3010/api/download_news`,
             responseType: 'blob',
             headers: {
                 "Content-Type": 'application/json'

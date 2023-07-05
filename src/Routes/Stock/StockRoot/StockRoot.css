@@ -278,4 +278,7 @@
         font-weight: 600;
         line-height: 34px;
     }
+    .root_stock-option {
+        overflow: scroll;
+    }
 }

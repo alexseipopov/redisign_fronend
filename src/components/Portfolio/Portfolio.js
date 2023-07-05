@@ -76,7 +76,19 @@ const Portfolio = ({name}) => {
         }
     ]
     const layout1 = {
-        title: 'Виды активов',
+        margin: {
+            l: 15,
+            r: 15,
+            t: 70,
+            b: 0
+        },
+        title: {
+            text: 'Виды активов',
+            // pad: {
+            //     b: 50,
+            //     t: 50
+            // }
+        },
         // annotations: [{
         //     text: "ann1\nann2",
         //     showarrow: false,
@@ -88,11 +100,18 @@ const Portfolio = ({name}) => {
         // },],
         // height: "100%",
         width: pieGraph / 2,
+        height: pieGraph * 1.15 / 2,
         // textposition: 'outside',
         showlegend: false,
         // grid: {rows: 1, columns: 1}
     }
     const layout2 = {
+        margin: {
+            l: 15,
+            r: 15,
+            t: 70,
+            b: 0
+        },
         title: 'Веса',
         // annotations: [{
         //     text: "ann1\nann2",
@@ -105,6 +124,7 @@ const Portfolio = ({name}) => {
         // },],
         // height: 400,
         width: pieGraph / 2,
+        height: pieGraph * 1.15 / 2,
         // textposition: 'outside',
         showlegend: false,
         autosize: true,
@@ -126,28 +146,31 @@ const Portfolio = ({name}) => {
                     }}/>
                 </div>
             </div>
-            <div className={"portfolio-table"}>
-                <div className={`portfolio-table_header`}>
-                    <div className={"table__type"}>Тип</div>
-                    <div className={"table__isin"}>ISIN</div>
-                    <div className={"table__emitent"}>Эмитент</div>
-                    <div className={"table__amount"}>Кол-во, шт</div>
-                    <div className={"table__cost"}>Цена</div>
-                    <div className={"table__price"}>Стоимость</div>
-                    <div className={"table__weight"}>Вес, %</div>
-                </div>
-                {data.map((el, i) => (
-                    <div key={i} className={`portfolio-table_row`}>
-                        <div className={"table__type"}>{el.type}</div>
-                        <div className={"table__isin"}>{el.isin}</div>
-                        <div className={"table__emitent"}>{el.emitent}</div>
-                        <div className={"table__amount"}>{el.amount}</div>
-                        <div className={"table__cost"}>{el.cost}</div>
-                        <div className={"table__price"}>{el.price}</div>
-                        <div className={"table__weight"}>{(Number(el.weight) * 100).toFixed(2)}</div>
+            <div className="portfolio-table-wrapper">
+                <div className={"portfolio-table"}>
+                    <div className={`portfolio-table_header`}>
+                        <div className={"table__type"}>Тип</div>
+                        <div className={"table__isin"}>ISIN</div>
+                        <div className={"table__emitent"}>Эмитент</div>
+                        <div className={"table__amount"}>Кол-во, шт</div>
+                        <div className={"table__cost"}>Цена</div>
+                        <div className={"table__price"}>Стоимость</div>
+                        <div className={"table__weight"}>Вес, %</div>
                     </div>
-                ))}
+                    {data.map((el, i) => (
+                        <div key={i} className={`portfolio-table_row`}>
+                            <div className={"table__type"}>{el.type}</div>
+                            <div className={"table__isin"}>{el.isin}</div>
+                            <div className={"table__emitent"}>{el.emitent}</div>
+                            <div className={"table__amount"}>{el.amount}</div>
+                            <div className={"table__cost"}>{el.cost}</div>
+                            <div className={"table__price"}>{el.price}</div>
+                            <div className={"table__weight"}>{(Number(el.weight) * 100).toFixed(2)}</div>
+                        </div>
+                    ))}
+                </div>
             </div>
+
         </div>
     )
 }

@@ -22,8 +22,14 @@
 /*    width: 100% !important;*/
 /*}*/
 
+.portfolio-table-wrapper {
+    overflow: scroll;
+    /*width: 100%;*/
+}
+
 .portfolio-table {
     margin: 30px 0;
+
 }
 
 .portfolio-table_header,
@@ -44,29 +50,35 @@
 }
 
 .table__type {
-    width: 10%;
+    width: 100px;
 }
 
 .table__isin {
-    width: 15%;
+    width: 150px;
 }
 
 .table__emitent {
-    width: 15%;
+    width: 150px;
 }
 
 .table__amount {
-    width: 10%;
+    width: 50px;
 }
 
 .table__cost {
-    width: 10%;
+    width: 100px;
 }
 
 .table__weight {
-    width: 10%;
+    width: 100px;
 }
 
 .table__price {
-    width: 10%;
+    width: 100px;
+}
+
+@media (max-width: 768px) {
+    .portfolio-table {
+        width: 850px;
+    }
 }

@@ -220,7 +220,7 @@ const StockRoot = ({name}) => {
                                                 Number(metrics.last_week.delta_percent) > 0
                                                     ? upgrade
                                                     : downgrade
-                                            } alt={"stonks"}/>{Math.abs(Number(metrics.last_value.value))}
+                                            } alt={"stonks"}/>{Math.abs(Number(metrics.last_week.value))}
                                             ({Number(metrics.last_week.delta_percent).toFixed(2)}%)
                                         </div>
                                     </div>

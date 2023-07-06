@@ -74,7 +74,7 @@ const StockRoot = ({name}) => {
         console.log('here')
     }, [filter, stocks])
     useEffect(() => {
-        axios(`${process.env.REACT_APP_API_URL}/api/get_all_portfolio`, {
+        axios(`http://158.160.96.57:3010/api/get_all_portfolio`, {
             headers: {
                 "Access-Control-Allow-Origin": "*"
             }
@@ -97,7 +97,7 @@ const StockRoot = ({name}) => {
     useEffect(() => {
         setLoadingGraph(true)
         console.log("chart", name)
-        axios(`${process.env.REACT_APP_API_URL}/api/get_portfolio_graph`, {
+        axios(`http://158.160.96.57:3010/api/get_portfolio_graph`, {
             data: {
                 portfolio: name,
                 interval: mode
@@ -119,7 +119,7 @@ const StockRoot = ({name}) => {
             .finally(() => {
                 setLoadingGraph(false)
             })
-        axios(`${process.env.REACT_APP_API_URL}/api/get_data_detail`, {
+        axios(`http://158.160.96.57:3010/api/get_data_detail`, {
             data: {
                 portfolio: name
             },
@@ -133,7 +133,7 @@ const StockRoot = ({name}) => {
             })
     }, [mode, name])
     useEffect(() => {
-        axios(`${process.env.REACT_APP_API_URL}/api/all_news`, {
+        axios(`http://158.160.96.57:3010/api/all_news`, {
             data: {portfolio: name},
             headers: {
                 "Access-Control-Allow-Origin": "*"

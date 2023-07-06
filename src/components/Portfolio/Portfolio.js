@@ -11,9 +11,9 @@ const Portfolio = ({name}) => {
     const [pieGraph, setPieGraph] = useState(700)
     const [onload, setOnload] = useState(false)
     console.log(new Date().toISOString().slice(0, 10))
-    console.log(process.env.REACT_APP_API_URL)
+    // console.log(process.env.REACT_APP_API_URL)
     useEffect(() => {
-        axios(`${process.env.REACT_APP_API_URL}/api/get_product_data`, {
+        axios(`http://158.160.96.57:3010/api/get_product_data`, {
             data: {
                 "portfolio": name,
                 "date": date

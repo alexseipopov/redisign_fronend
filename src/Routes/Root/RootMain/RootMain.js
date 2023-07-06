@@ -12,7 +12,7 @@ const RootMain = () => {
     useEffect(() => {
         setLoader(true)
         console.log("Root Main")
-        axios(`${process.env.REACT_APP_API_URL}/api/get_all_portfolio`)
+        axios(`http://158.160.96.57:3010/api/get_all_portfolio`)
             .then(data => {
                 console.log(data)
                 console.log(data.data)

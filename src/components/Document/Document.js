@@ -9,7 +9,7 @@ const Document = ({elem, name}) => {
         console.log(chart_id, filename)
         axios({
             method: "POST",
-            url: 'http://158.160.96.57:3010/api/download_docs',
+            url: `${process.env.REACT_APP_API_URL}/api/download_docs`,
             responseType: 'blob',
             headers: {
                 "Content-Type": 'application/json'

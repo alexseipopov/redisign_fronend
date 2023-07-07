@@ -13,7 +13,7 @@ const Portfolio = ({name}) => {
     console.log(new Date().toISOString().slice(0, 10))
     // console.log(process.env.REACT_APP_API_URL)
     useEffect(() => {
-        axios(`https://admin.index.rumberg.ru/api/get_product_data`, {
+        axios(`https://admin.index.rumtechdemo.ru/api/get_product_data`, {
             data: {
                 "portfolio": name,
                 "date": date

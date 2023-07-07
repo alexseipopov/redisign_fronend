@@ -13,7 +13,7 @@ const Portfolio = ({name}) => {
     console.log(new Date().toISOString().slice(0, 10))
     // console.log(process.env.REACT_APP_API_URL)
     useEffect(() => {
-        axios(`http://158.160.96.57:3010/api/get_product_data`, {
+        axios(`https://158.160.96.57:3010/api/get_product_data`, {
             data: {
                 "portfolio": name,
                 "date": date

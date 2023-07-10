@@ -154,8 +154,8 @@ const Portfolio = ({name}) => {
                         <div className={"table__isin"}>ISIN</div>
                         <div className={"table__emitent"}>Эмитент</div>
                         <div className={"table__amount"}>Кол-во, шт</div>
-                        <div className={"table__cost"}>Цена</div>
                         <div className={"table__price"}>Стоимость</div>
+                        <div className={"table__cost"}>Цена</div>
                         <div className={"table__weight"}>Вес, %</div>
                     </div>
                     {data.map((el, i) => (
@@ -164,8 +164,8 @@ const Portfolio = ({name}) => {
                             <div className={"table__isin"}>{el.isin}</div>
                             <div className={"table__emitent"}>{el.emitent}</div>
                             <div className={"table__amount"}>{el.amount}</div>
-                            <div className={"table__cost"}>{el.cost}</div>
                             <div className={"table__price"}>{el.price}</div>
+                            <div className={"table__cost"}>{el.cost}</div>
                             <div className={"table__weight"}>{(Number(el.weight) * 100).toFixed(2)}</div>
                         </div>
                     ))}

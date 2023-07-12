@@ -220,6 +220,27 @@
     align-items: center;
 }
 
+.index_doesnt_exist {
+    font-weight: 600;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.index_doesnt_exist_link {
+    color: #F5F6FA;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background-color: #0080BF;
+}
+
+.not_enough_data {
+    font-weight: 600;
+    font-size: 24px;
+    margin: 40px 0;
+}
+
 @media (max-width: 1100px) {
     .graph-price-block {
         flex-direction: column;
@@ -255,6 +276,7 @@
         width: 100%;
     }
 }
+
 
 @media (max-width: 550px) {
     .graph-stat {

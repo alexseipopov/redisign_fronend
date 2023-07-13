@@ -78,7 +78,7 @@ const StockRoot = ({name}) => {
         console.log('here')
     }, [filter, stocks])
     useEffect(() => {
-        axios(`https://admin.index.rumberg.ru/api/get_all_portfolio`, {
+        axios(`https://admin.index.rumtechdemo.ru/api/get_all_portfolio`, {
             headers: {
                 "Access-Control-Allow-Origin": "*"
             }
@@ -101,7 +101,7 @@ const StockRoot = ({name}) => {
     useEffect(() => {
         setLoadingGraph(true)
         console.log("chart", name)
-        axios(`https://admin.index.rumberg.ru/api/get_portfolio_graph`, {
+        axios(`https://admin.index.rumtechdemo.ru/api/get_portfolio_graph`, {
             data: {
                 portfolio: name,
                 interval: mode
@@ -140,7 +140,7 @@ const StockRoot = ({name}) => {
             .finally(() => {
                 setLoadingGraph(false)
             })
-        axios(`https://admin.index.rumberg.ru/api/get_data_detail`, {
+        axios(`https://admin.index.rumtechdemo.ru/api/get_data_detail`, {
             data: {
                 portfolio: name
             },
@@ -159,7 +159,7 @@ const StockRoot = ({name}) => {
             })
     }, [mode, name])
     useEffect(() => {
-        axios(`https://admin.index.rumberg.ru/api/all_news`, {
+        axios(`https://admin.index.rumtechdemo.ru/api/all_news`, {
             data: {portfolio: name},
             headers: {
                 "Access-Control-Allow-Origin": "*"

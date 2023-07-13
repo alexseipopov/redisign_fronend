@@ -14,7 +14,7 @@ const Portfolio = ({name}) => {
     const [isMobile, setIsMobile] = useState(false)
     console.log(new Date().toISOString().slice(0, 10))
     useEffect(() => {
-        axios(`https://admin.index.rumberg.ru/api/get_product_data`, {
+        axios(`https://admin.index.rumtechdemo.ru/api/get_product_data`, {
             data: {
                 "portfolio": name,
                 "date": date

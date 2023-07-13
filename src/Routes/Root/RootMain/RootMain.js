@@ -12,7 +12,7 @@ const RootMain = () => {
     useEffect(() => {
         setLoader(true)
         console.log("Root Main")
-        axios(`https://admin.index.rumtechdemo.ru/api/get_all_portfolio`)
+        axios(`https://admin.index.rumberg.ru/api/get_all_portfolio`)
             .then(data => {
                 console.log(data)
                 console.log(data.data)

@@ -6,7 +6,6 @@ import axios from "axios";
 const Document = ({elem, name}) => {
 
     const getFile = (chart_id, filename) => {
-        console.log(chart_id, filename)
         axios({
             method: "POST",
             url: `https://admin.index.rumtechdemo.ru/api/download_docs`,

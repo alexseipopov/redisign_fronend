@@ -12,7 +12,6 @@ const Portfolio = ({name}) => {
     const [pieGraph, setPieGraph] = useState(700)
     const [onload, setOnload] = useState(false)
     const [isMobile, setIsMobile] = useState(false)
-    console.log(new Date().toISOString().slice(0, 10))
     useEffect(() => {
         axios(`https://admin.index.rumtechdemo.ru/api/get_product_data`, {
             data: {
@@ -21,12 +20,10 @@ const Portfolio = ({name}) => {
             },
             method: "POST"
         }).then(resp => {
-            console.log(resp.data)
             if (resp.data.code === 0) {
                 setData(resp.data.data)
                 setPieData(resp.data.type_pie)
                 setWeightPieData(resp.data.weight_pie)
-                console.log(resp.data)
                 setIsExist(true)
             } else {
                 setIsExist(false)

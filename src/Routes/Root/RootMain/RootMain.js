@@ -11,16 +11,12 @@ const RootMain = () => {
     const [loader, setLoader] = useState(false)
     useEffect(() => {
         setLoader(true)
-        console.log("Root Main")
         axios(`https://admin.index.rumtechdemo.ru/api/get_all_portfolio`)
             .then(data => {
-                console.log(data)
-                console.log(data.data)
                 setIndexes(data.data)
             })
             .catch((e) => {
-                console.log("Error :(")
-                console.log(e)
+                console.error(e)
             })
             .finally(() => {
                 setLoader(false)

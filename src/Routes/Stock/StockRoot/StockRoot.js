@@ -75,7 +75,6 @@ const StockRoot = ({name}) => {
 
     useEffect(() => {
         setResult(stocks.filter(elem => elem.includes(filter.toUpperCase())))
-        console.log('here')
     }, [filter, stocks])
     useEffect(() => {
         axios(`https://admin.index.rumtechdemo.ru/api/get_all_portfolio`, {
@@ -87,7 +86,6 @@ const StockRoot = ({name}) => {
                 setStocks(data.data.map(elem => elem.text))
                 data.data.map(elem => {
                     if (elem.text === name.toUpperCase()) {
-                        console.log("===", elem)
                         setTitle(elem.title)
                     }
                     return undefined
@@ -95,12 +93,10 @@ const StockRoot = ({name}) => {
                 setFilter("")
             })
     }, [name])
-    console.warn(title)
     const [graphDataX, setGraphDataX] = useState([])
     const [graphDataY, setGraphDataY] = useState([])
     useEffect(() => {
         setLoadingGraph(true)
-        console.log("chart", name)
         axios(`https://admin.index.rumtechdemo.ru/api/get_portfolio_graph`, {
             data: {
                 portfolio: name,
@@ -121,7 +117,6 @@ const StockRoot = ({name}) => {
                     setDocuments(data.data.document)
                     setOption(0)
                     setMetrics(data.data.metrics)
-                    console.log("?", data.data)
                 } else if (data.data.code === 1) {
                     setIsPreviousDataExist(false)
                     setIsDataExist(true)
@@ -167,7 +162,6 @@ const StockRoot = ({name}) => {
             method: "POST"
         })
             .then(data => {
-                console.warn(data.data)
                 setNews(data.data.news)
             })
     }, [])
@@ -351,8 +345,8 @@ const StockRoot = ({name}) => {
                                         ? <Portfolio name={name}/>
                                         : option === 2
                                             ? <div className={"documents-block"}>
-                                                {documents.map(elem => (
-                                                        <Document elem={elem} name={name}/>
+                                                {documents.map((elem, i) => (
+                                                        <Document key={i} elem={elem} name={name}/>
                                                     )
                                                 )}
                                             </div>

@@ -23,6 +23,7 @@ ChartJS.register(
 );
 
 const BarWindow = ({name}) => {
+    const isMobile = window.innerWidth < 768
     const modes = ["1M", "3M", "6M", "1Y", "2Y", "5Y", "10Y"]
     const colors = ["#FF6384", "#36A2EB", "#FFCE56", "#FFAA00", "#FF00AA", "#00FFAA", "#AA00FF"]
     const [mode, setMode] = useState("1mo")
@@ -30,6 +31,7 @@ const BarWindow = ({name}) => {
     const [barData, setBarData] = useState([])
     const [labels, setLabels] = useState([])
     const [emitents, setEmitents] = useState([])
+
 
 
     const changeMode = (elem) => {
@@ -78,6 +80,8 @@ const BarWindow = ({name}) => {
                 })
             }}
             options={{
+                responsive: true,
+                aspectRatio: isMobile ? 0.8 : 1.5,
                 scales: {
                     x: {
                         stacked: true,
@@ -89,6 +93,11 @@ const BarWindow = ({name}) => {
                         },
                     },
                 },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    }
+                }
             }}/>
         </div>
     )

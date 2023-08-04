@@ -15,3 +15,11 @@
     background-color: #F5F6FA;
     border-radius: 6px;
 }
+
+@media (max-width: 768px) {
+    .bar-window {
+        width: 100%;
+        padding-top: 50px;
+        margin-top: 10px;
+    }
+}

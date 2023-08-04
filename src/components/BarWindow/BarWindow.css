@@ -1,0 +1,17 @@
+.bar-window {
+    position: relative;
+    width: 747px;
+    padding-top: 40px;
+}
+
+.bar-nav {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    padding: 4px;
+    font-size: 14px;
+    font-weight: 400;
+    background-color: #F5F6FA;
+    border-radius: 6px;
+}

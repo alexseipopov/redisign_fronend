@@ -189,7 +189,7 @@ const StockRoot = ({name}) => {
                         <div className={"root_stock-main"}>
                             {isDataExist === true
                                 ? <div>
-                                    {indexType === "ams"
+                                    {indexType === "AMC"
                                         ? <div>
                                             <BarWindow name={name} />
                                         </div>

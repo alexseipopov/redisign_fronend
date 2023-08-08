@@ -15,6 +15,17 @@ import GraphWindow from "../../../components/GraphWindow/GraphWindow";
 import {dividercolor} from "plotly.js/src/plots/cartesian/layout_attributes";
 import BarWindow from "../../../components/BarWindow/BarWindow";
 
+function decodeHtmlEntities(text) {
+    const textarea = document.createElement('div');
+    textarea.classList.add("description-about")
+    textarea.innerHTML = text;
+    return textarea.toString();
+}
+
+function replaceBreakTags(text) {
+    return text.replace(/<br\s*\/?>/g, '<br>\n');
+}
+
 const StockRoot = ({name}) => {
 
     const [amsOptions, setAmsOptions] = useState(0)
@@ -27,13 +38,16 @@ const StockRoot = ({name}) => {
     const [selected, setSelected] = useState(name.toUpperCase())
     const [filter, setFilter] = useState("goog")
     const [result, setResult] = useState([])
+    const [formattedDescription, setFormattedDescription] = useState("")
 
     const [mode, setMode] = useState("1mo")
     const [title, setTitle] = useState("")
     const [about, setAbout] = useState("")
     const [documents, setDocuments] = useState([])
     const [option, setOption] = useState(0)
-    const [specialData, setSpecialData] = useState({})
+    const [specialData, setSpecialData] = useState({
+        description: ""
+    })
     const [news, setNews] = useState([])
     const [metrics, setMetrics] = useState({
         level: "",
@@ -149,7 +163,10 @@ const StockRoot = ({name}) => {
             method: "POST"
         })
             .then(data => {
-                setSpecialData(data.data)
+                const tmp = data.data
+                tmp.description = tmp.description.replaceAll("\n", "<br>")
+                setFormattedDescription(tmp.description)
+                setSpecialData(tmp)
                 if (data.data.code === 0) {
                     setIndexType(data.data.type)
                     setIsExistIndex(true)
@@ -264,9 +281,7 @@ const StockRoot = ({name}) => {
                                                 {/*    <div className={"description-key"}>Описание</div>*/}
                                                 {/*    <div className={"description-value"}>{specialData.description}</div>*/}
                                                 {/*</div>*/}
-                                                <div className={"description-about"}>
-                                                    {specialData.description}
-                                                </div>
+                                                <div className={'description-about'} dangerouslySetInnerHTML={{__html: formattedDescription}}/>
                                             </div>
                                             : option === 1
                                                 ? <Portfolio name={name}/>

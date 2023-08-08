@@ -13,7 +13,7 @@ const Portfolio = ({name}) => {
     const [onload, setOnload] = useState(false)
     const [isMobile, setIsMobile] = useState(false)
     useEffect(() => {
-        axios(`https://admin.index.rumtechdemo.ru/api/get_product_data`, {
+        axios(`https://admin.index.rumberg.ru//api/get_product_data`, {
             data: {
                 "portfolio": name,
                 "date": date

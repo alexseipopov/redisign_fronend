@@ -30,3 +30,4 @@ EXPOSE 3005
 CMD ["nginx", "-g", "daemon off;"]
 
 # https://admin.index.rumtechdemo.ru
+# https://admin.index.rumberg.ru/

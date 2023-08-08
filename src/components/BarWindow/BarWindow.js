@@ -43,7 +43,7 @@ const BarWindow = ({name}) => {
     useEffect(() => {
         axios({
             method: 'post',
-            url: "https://admin.index.rumtechdemo.ru/api/get_bar_data",
+            url: "https://admin.index.rumberg.ru//api/get_bar_data",
             data: {
                 mode: mode,
                 portfolio: name

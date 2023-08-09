@@ -95,7 +95,7 @@ const StockRoot = ({name}) => {
         setResult(stocks.filter(elem => elem.includes(filter.toUpperCase())))
     }, [filter, stocks])
     useEffect(() => {
-        axios(`https://admin.index.rumberg.ru/api/get_all_portfolio`, {
+        axios(`/api/get_all_portfolio`, {
             headers: {
                 "Access-Control-Allow-Origin": "*"
             }
@@ -115,7 +115,7 @@ const StockRoot = ({name}) => {
     const [graphDataY, setGraphDataY] = useState([])
     useEffect(() => {
         setLoadingGraph(true)
-        axios(`https://admin.index.rumberg.ru/api/get_portfolio_graph`, {
+        axios(`/api/get_portfolio_graph`, {
             data: {
                 portfolio: name,
                 interval: mode
@@ -153,7 +153,7 @@ const StockRoot = ({name}) => {
             .finally(() => {
                 setLoadingGraph(false)
             })
-        axios(`https://admin.index.rumberg.ru/api/get_data_detail`, {
+        axios(`/api/get_data_detail`, {
             data: {
                 portfolio: name
             },
@@ -176,7 +176,7 @@ const StockRoot = ({name}) => {
             })
     }, [mode, name])
     useEffect(() => {
-        axios(`https://admin.index.rumberg.ru/api/all_news`, {
+        axios(`/api/all_news`, {
             data: {portfolio: name},
             headers: {
                 "Access-Control-Allow-Origin": "*"

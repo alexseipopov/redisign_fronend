@@ -8,7 +8,7 @@ const Document = ({elem, name}) => {
     const getFile = (chart_id, filename) => {
         axios({
             method: "POST",
-            url: `https://admin.index.rumberg.ru/api/download_docs`,
+            url: `/api/download_docs`,
             responseType: 'blob',
             headers: {
                 "Content-Type": 'application/json'

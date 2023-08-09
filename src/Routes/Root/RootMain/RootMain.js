@@ -11,7 +11,7 @@ const RootMain = () => {
     const [loader, setLoader] = useState(false)
     useEffect(() => {
         setLoader(true)
-        axios(`https://admin.index.rumberg.ru/api/get_all_portfolio`)
+        axios(`/api/get_all_portfolio`)
             .then(data => {
                 setIndexes(data.data)
             })

@@ -20,7 +20,7 @@ jobs:
         run: |
           echo $GITHUB_REPOSITORY
           echo $GITHUB_REF
-          if [ "$GITHUB_REPOSITORY" == "alexseipopov/redisign_frontend" ] && [ "$GITHUB_REF" == "refs/heads/develop" ]; then
+          if [ "$GITHUB_REPOSITORY" == "alexseipopov/redisign_fronend" ] && [ "$GITHUB_REF" == "refs/heads/develop" ]; then
             docker build -t cr.yandex/$CR_REGISTRY/$CR_REPO:stand .
             docker push cr.yandex/$CR_REGISTRY/$CR_REPO:stand
           fi
@@ -39,7 +39,7 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           IMAGE_TAG: ${{ github.sha }}
           script: |
-            if [ "$GITHUB_REPOSITORY" == "alexseipopov/redisign_frontend" ] && [ "$GITHUB_REF" == "refs/heads/develop" ]; then
+            if [ "$GITHUB_REPOSITORY" == "alexseipopov/redisign_fronend" ] && [ "$GITHUB_REF" == "refs/heads/develop" ]; then
               docker pull cr.yandex/crpo63gr16fshqrmielj/rmb_index_frontend:stand
               docker-compose up --no-deps -d frontend
             fi

@@ -29,7 +29,8 @@ function replaceBreakTags(text) {
 const StockRoot = ({name}) => {
 
     const [amsOptions, setAmsOptions] = useState(0)
-    const [indexType, setIndexType] = useState("vanilla")
+    const [indexType, setIndexType] = useState("Vanilla")
+    const [publicPortfolio, setPublicPortfolio] = useState("")
     const [isPreviousDataExist, setIsPreviousDataExist] = useState(false)
     const [isDataExist, setIsDataExist] = useState(true)
     const [isExistIndex, setIsExistIndex] = useState(true)
@@ -168,6 +169,8 @@ const StockRoot = ({name}) => {
                 setFormattedDescription(tmp.description)
                 setSpecialData(tmp)
                 if (data.data.code === 0) {
+                    console.log(data.data)
+                    setPublicPortfolio(data.data.public_portfolio)
                     setIndexType(data.data.type)
                     setIsExistIndex(true)
                 } else {
@@ -208,10 +211,10 @@ const StockRoot = ({name}) => {
                                 ? <div>
                                     {indexType === "AMC"
                                         ? <div>
-                                            <BarWindow name={name} />
+                                            <BarWindow name={name}/>
                                         </div>
 
-                                            : <GraphWindow
+                                        : <GraphWindow
                                             graphDataX={graphDataX}
                                             graphDataY={graphDataY}
                                             loadingGraph={loadingGraph}
@@ -219,26 +222,29 @@ const StockRoot = ({name}) => {
                                             mode={mode}
                                             setMode={setMode}
                                         />
-                                            }
-                                        </div>
-
-                                        : <div className={"root_stock-main"}>
-                                            <h3 className={"not_enough_data"}>Данных для индекса пока нет</h3>
-                                        </div>
                                     }
+                                </div>
 
-                                    <div className={"root_stock-description"}>
-                                        <div className={"root_stock-option"}>
-                                            <div
-                                                onClick={() => setOption(0)}
-                                                className={`root_stock-option-btn description ${option === 0 ? "active" : ""}`}>
-                                                Описание
-                                            </div>
-                                            <div
-                                                onClick={() => setOption(1)}
-                                                className={`root_stock-option-btn documents ${option === 1 ? "active" : ""}`}>
-                                                Состав Портфеля
-                                            </div>
+                                : <div className={"root_stock-main"}>
+                                    <h3 className={"not_enough_data"}>Данных для индекса пока нет</h3>
+                                </div>
+                            }
+
+                            <div className={"root_stock-description"}>
+                                <div className={"root_stock-option"}>
+                                    <div
+                                        onClick={() => setOption(0)}
+                                        className={`root_stock-option-btn description ${option === 0 ? "active" : ""}`}>
+                                        Описание
+                                    </div>
+                                    <div
+                                        onClick={() => setOption(1)}
+                                        className={`root_stock-option-btn documents ${option === 1 ? "active" : ""}`}>
+                                        Состав Портфеля
+                                    </div>
+                                    {indexType === "AMC"
+                                    ? <></>
+                                    : <div>
                                             {documents.length !== 0
                                                 ? <div
                                                     onClick={() => setOption(2)}
@@ -247,76 +253,95 @@ const StockRoot = ({name}) => {
                                                 </div>
                                                 : <></>
                                             }
-                                            {news.length !== 0
-                                                ? <div
-                                                    onClick={() => setOption(3)}
-                                                    className={`root_stock-option-btn documents ${option === 3 ? "active" : ""}`}>
-                                                    Новости
-                                                </div>
-                                                : <></>
-                                            }
                                         </div>
 
-                                        {option === 0 ?
-                                            <div className={"description-details"}>
-                                                <div className={"description-fields"}>
-                                                    <div className={"description-row"}>
-                                                        <div className={"description-key"}>Название</div>
-                                                        <div className={"description-value"}>{title}</div>
-                                                    </div>
-                                                    <div className={"description-row"}>
-                                                        <div className={"description-key"}>ISIN</div>
-                                                        <div className={"description-value"}>{specialData.isin}</div>
-                                                    </div>
-                                                    <div className={"description-row"}>
-                                                        <div className={"description-key"}>Тикер</div>
-                                                        <div className={"description-value"}>{name.toUpperCase()}</div>
-                                                    </div>
-                                                    <div className={"description-row"}>
-                                                        <div className={"description-key"}>Начало расчета</div>
-                                                        <div className={"description-value"}>{specialData.date}</div>
-                                                    </div>
-                                                </div>
-                                                {/*<div className={"description-row"}>*/}
-                                                {/*    <div className={"description-key"}>Описание</div>*/}
-                                                {/*    <div className={"description-value"}>{specialData.description}</div>*/}
-                                                {/*</div>*/}
-                                                <div className={'description-about'} dangerouslySetInnerHTML={{__html: formattedDescription}}/>
+                                    }
+
+                                    {news.length !== 0
+                                        ? <div
+                                            onClick={() => setOption(3)}
+                                            className={`root_stock-option-btn documents ${option === 3 ? "active" : ""}`}>
+                                            Новости
+                                        </div>
+                                        : <></>
+                                    }
+                                </div>
+
+                                {option === 0 ?
+                                    <div className={"description-details"}>
+                                        <div className={"description-fields"}>
+                                            <div className={"description-row"}>
+                                                <div className={"description-key"}>Название</div>
+                                                <div className={"description-value"}>{title}</div>
                                             </div>
-                                            : option === 1
-                                                ? <Portfolio name={name}/>
-                                                : option === 2
-                                                    ? <div className={"documents-block"}>
-                                                        {documents.map((elem, i) => (
-                                                                <Document key={i} elem={elem} name={name}/>
-                                                            )
-                                                        )}
-                                                    </div>
-                                                    : <div className={"news-block"}>
-                                                        {news.map((elem, i) => (
-                                                                <News key={i} news={elem}/>
-                                                            )
-                                                        )}
-                                                    </div>
+                                            {indexType === "AMC"
+                                                ? <></>
+                                                : <div className={"description-row"}>
+                                                    <div className={"description-key"}>ISIN</div>
+                                                    <div className={"description-value"}>{specialData.isin}</div>
+                                                </div>
+
+                                            }
+                                            {indexType === "AMC"
+                                                ? <></>
+                                                : <div className={"description-row"}>
+                                                    <div className={"description-key"}>Тикер</div>
+                                                    <div className={"description-value"}>{name.toUpperCase()}</div>
+                                                </div>
+
+                                            }
+
+                                            <div className={"description-row"}>
+                                                <div className={"description-key"}>Начало расчета</div>
+                                                <div className={"description-value"}>{specialData.date}</div>
+                                            </div>
+                                        </div>
+                                        {/*<div className={"description-row"}>*/}
+                                        {/*    <div className={"description-key"}>Описание</div>*/}
+                                        {/*    <div className={"description-value"}>{specialData.description}</div>*/}
+                                        {/*</div>*/}
+                                        <div className={'description-about'}
+                                             dangerouslySetInnerHTML={{__html: formattedDescription}}/>
+                                        {publicPortfolio !== ""
+                                            ? <Link to={`/${publicPortfolio}`}>Перейти в Публичный портфель</Link>
+                                            : <></>
                                         }
+
                                     </div>
-                                </div>
-                                </div>
-                                </Container>
-                                </main>
-                                )
-                            } else {
-                            return (
-                            <main>
-                            <Container>
-                            <h3 className={"index_doesnt_exist"}>Индекса {specialData.name} не существует
-                        </h3>
-                        <Link to={'/'} className={"index_doesnt_exist_link"}>Вернуться на главную</Link>
+                                    : option === 1
+                                        ? <Portfolio name={name}/>
+                                        : option === 2
+                                            ? <div className={"documents-block"}>
+                                                {documents.map((elem, i) => (
+                                                        <Document key={i} elem={elem} name={name}/>
+                                                    )
+                                                )}
+                                            </div>
+                                            : <div className={"news-block"}>
+                                                {news.map((elem, i) => (
+                                                        <News key={i} news={elem}/>
+                                                    )
+                                                )}
+                                            </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </Container>
+            </main>
+        )
+    } else {
+        return (
+            <main>
+                <Container>
+                    <h3 className={"index_doesnt_exist"}>Индекса {specialData.name} не существует
+                    </h3>
+                    <Link to={'/'} className={"index_doesnt_exist_link"}>Вернуться на главную</Link>
                 </Container>
             </main>
         )
     }
 
-    }
+}
 
-    export default StockRoot
+export default StockRoot

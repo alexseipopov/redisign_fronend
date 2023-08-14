@@ -180,7 +180,6 @@ const StockRoot = ({name}) => {
                 <Container>
                     <div className={`root_stock`}>
                         <div className={`root_stock-selection`}>
-                            {/*TODO тут будет переменная из запроса*/}
                             <div className={'root_stock-select'}>
                                 {indexType === "AMC"
                                     ? <></>
@@ -188,7 +187,6 @@ const StockRoot = ({name}) => {
                                               setSelected={(elem) => setSelected(elem)}/>
                                 }
                                 <p className={'root_stock-title'}>{title}</p>
-
                             </div>
                         </div>
                         <div className={"root_stock-main"}>

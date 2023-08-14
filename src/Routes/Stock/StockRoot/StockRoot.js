@@ -85,12 +85,6 @@ const StockRoot = ({name}) => {
         })
             .then(data => {
                 setStocks(data.data.map(elem => elem.text))
-                data.data.map(elem => {
-                    if (elem.text === name.toUpperCase()) {
-                        setTitle(elem.title)
-                    }
-                    return undefined
-                })
                 setFilter("")
             })
     }, [name])
@@ -153,6 +147,7 @@ const StockRoot = ({name}) => {
                 if (data.data.code === 0) {
                     console.log(data.data)
                     setPublicPortfolio(data.data.public_portfolio)
+                    setTitle(data.data.title)
                     setIndexType(data.data.type)
                     setIsExistIndex(true)
                 } else {

@@ -2,33 +2,15 @@ import './StockRoot.css'
 import Container from "../../../components/Container/Container";
 import Select from "../../../components/Select/Select";
 import {useEffect, useState} from "react";
-import upgrade from './../../../static/upgrade.svg'
-import downgrade from './../../../static/downgrade.svg'
-import Graph from "../../../components/Graph/Graph";
 import axios from "axios";
 import Document from "../../../components/Document/Document";
-import Loader from "../../../components/Loader/Loader";
 import Portfolio from "../../../components/Portfolio/Portfolio";
 import News from "../../../components/News/News";
 import {Link} from "react-router-dom";
 import GraphWindow from "../../../components/GraphWindow/GraphWindow";
-import {dividercolor} from "plotly.js/src/plots/cartesian/layout_attributes";
 import BarWindow from "../../../components/BarWindow/BarWindow";
 
-function decodeHtmlEntities(text) {
-    const textarea = document.createElement('div');
-    textarea.classList.add("description-about")
-    textarea.innerHTML = text;
-    return textarea.toString();
-}
-
-function replaceBreakTags(text) {
-    return text.replace(/<br\s*\/?>/g, '<br>\n');
-}
-
 const StockRoot = ({name}) => {
-
-    const [amsOptions, setAmsOptions] = useState(0)
     const [indexType, setIndexType] = useState("Vanilla")
     const [publicPortfolio, setPublicPortfolio] = useState("")
     const [isPreviousDataExist, setIsPreviousDataExist] = useState(false)
@@ -200,8 +182,11 @@ const StockRoot = ({name}) => {
                         <div className={`root_stock-selection`}>
                             {/*TODO тут будет переменная из запроса*/}
                             <div className={'root_stock-select'}>
-                                <Select values={result} filter={filter} setSearch={setFilter} selected={selected}
-                                        setSelected={(elem) => setSelected(elem)}/>
+                                {indexType === "AMC"
+                                    ? <></>
+                                    : <Select values={result} filter={filter} setSearch={setFilter} selected={selected}
+                                              setSelected={(elem) => setSelected(elem)}/>
+                                }
                                 <p className={'root_stock-title'}>{title}</p>
 
                             </div>
@@ -243,8 +228,8 @@ const StockRoot = ({name}) => {
                                         Состав Портфеля
                                     </div>
                                     {indexType === "AMC"
-                                    ? <></>
-                                    : <div>
+                                        ? <></>
+                                        : <div>
                                             {documents.length !== 0
                                                 ? <div
                                                     onClick={() => setOption(2)}

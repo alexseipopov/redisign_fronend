@@ -8,11 +8,14 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
+        if: ${{ github.repository == 'alexseipopov/finance_backend' && (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main') }}
       - name: Yandex CR Login
         uses: yc-actions/yc-cr-login@v0.1-alpha
+        if: ${{ github.repository == 'alexseipopov/finance_backend' && (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main') }}
         with:
           yc-sa-json-credentials: ${{ secrets.YC_KEY }}
       - name: Build image
+        if: ${{ github.repository == 'alexseipopov/finance_backend' && (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main') }}
         env:
           CR_REGISTRY: crpo63gr16fshqrmielj
           CR_REPO: rmb_index_frontend
@@ -23,6 +26,9 @@ jobs:
           if [ "$GITHUB_REPOSITORY" == "alexseipopov/redisign_fronend" ] && [ "$GITHUB_REF" == "refs/heads/develop" ]; then
             docker build -t cr.yandex/$CR_REGISTRY/$CR_REPO:stand .
             docker push cr.yandex/$CR_REGISTRY/$CR_REPO:stand
+          elif [ "$GITHUB_REPOSITORY" == "alexseipopov/redisign_fronend" ] && [ "$GITHUB_REF" == "refs/heads/main" ]; then
+            docker build -t cr.yandex/$CR_REGISTRY/$CR_REPO:prod .
+            docker push cr.yandex/$CR_REGISTRY/$CR_REPO:prod
           fi
 
   deploy:
@@ -32,6 +38,7 @@ jobs:
     steps:
       - name: SSH connect and deploy
         uses: appleboy/ssh-action@master
+        if: ${{ github.repository == 'alexseipopov/finance_backend' && github.ref == 'refs/heads/develop' }}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
@@ -40,7 +47,5 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
           shell: bash
           script: |
-            if [ "$GITHUB_REPOSITORY" == "alexseipopov/redisign_fronend" ] && [ "$GITHUB_REF" == "refs/heads/develop" ]; then
-              docker pull cr.yandex/crpo63gr16fshqrmielj/rmb_index_frontend:stand
-              docker-compose up --no-deps -d frontend
-            fi
+            docker pull cr.yandex/crpo63gr16fshqrmielj/rmb_index_frontend:stand
+            docker-compose up --no-deps -d frontend

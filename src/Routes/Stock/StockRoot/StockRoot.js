@@ -298,20 +298,28 @@ const StockRoot = ({name}) => {
                                                         )
                                                     )}
                                                 </div>
-                                                <div onClick={() => setIsHiddenExpired(!isHiddenExpired)}>
-                                                    {isHiddenExpired === false
-                                                        ? <div className={"documents-expired-btn"}>Show expired documents</div>
-                                                        : <div className={"documents-expired-btn"}>Hidden expired documents</div>
-                                                    }
-                                                </div>
-                                                <div className={"documents-block"} style={
-                                                    {display: isHiddenExpired === false ? "none" : "block"}
-                                                }>
-                                                    {documents.expired.map((elem, i) => (
-                                                            <Document key={i} elem={elem} name={name}/>
-                                                        )
-                                                    )}
-                                                </div>
+                                                {
+                                                    documents.expired.length !== 0 &&
+                                                    <>
+                                                        <div onClick={() => setIsHiddenExpired(!isHiddenExpired)}>
+                                                            {isHiddenExpired === false
+                                                                ? <div className={"documents-expired-btn"}>Show expired
+                                                                    documents</div>
+                                                                :
+                                                                <div className={"documents-expired-btn"}>Hidden expired
+                                                                    documents</div>
+                                                            }
+                                                        </div>
+                                                        <div className={"documents-block"} style={
+                                                            {display: isHiddenExpired === false ? "none" : "block"}
+                                                        }>
+                                                            {documents.expired.map((elem, i) => (
+                                                                    <Document key={i} elem={elem} name={name}/>
+                                                                )
+                                                            )}
+                                                        </div>
+                                                    </>
+                                                }
                                             </>
                                             : <div className={"news-block"}>
                                                 {news.map((elem, i) => (

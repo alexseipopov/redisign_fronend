@@ -22,11 +22,15 @@ const StockRoot = ({name}) => {
     const [filter, setFilter] = useState("goog")
     const [result, setResult] = useState([])
     const [formattedDescription, setFormattedDescription] = useState("")
+    const [isHiddenExpired, setIsHiddenExpired] = useState(false)
 
     const [mode, setMode] = useState("1mo")
     const [title, setTitle] = useState("")
     const [about, setAbout] = useState("")
-    const [documents, setDocuments] = useState([])
+    const [documents, setDocuments] = useState({
+        current: [],
+        expired: []
+    })
     const [option, setOption] = useState(0)
     const [specialData, setSpecialData] = useState({
         description: ""
@@ -103,6 +107,7 @@ const StockRoot = ({name}) => {
             method: "POST"
         })
             .then(data => {
+                console.log(data.data)
                 if (data.data.code === 0) {
                     setIsPreviousDataExist(true)
                     setIsDataExist(true)
@@ -220,19 +225,16 @@ const StockRoot = ({name}) => {
                                         className={`root_stock-option-btn documents ${option === 1 ? "active" : ""}`}>
                                         Состав Портфеля
                                     </div>
-                                    {indexType === "AMC"
-                                        ? <></>
-                                        : <div>
-                                            {documents.length !== 0
-                                                ? <div
+                                    {indexType !== "AMC" &&
+                                        <div>
+                                            {documents.current.length !== 0 && documents.expired.length !== 0 &&
+                                                <div
                                                     onClick={() => setOption(2)}
                                                     className={`root_stock-option-btn documents ${option === 2 ? "active" : ""}`}>
                                                     Документы
                                                 </div>
-                                                : <></>
                                             }
                                         </div>
-
                                     }
 
                                     {news.length !== 0
@@ -289,12 +291,28 @@ const StockRoot = ({name}) => {
                                     : option === 1
                                         ? <Portfolio name={name}/>
                                         : option === 2
-                                            ? <div className={"documents-block"}>
-                                                {documents.map((elem, i) => (
-                                                        <Document key={i} elem={elem} name={name}/>
-                                                    )
-                                                )}
-                                            </div>
+                                            ? <>
+                                                <div className={"documents-block"}>
+                                                    {documents.current.map((elem, i) => (
+                                                            <Document key={i} elem={elem} name={name}/>
+                                                        )
+                                                    )}
+                                                </div>
+                                                <div onClick={() => setIsHiddenExpired(!isHiddenExpired)}>
+                                                    {isHiddenExpired === false
+                                                        ? <div className={"documents-expired-btn"}>Show expired documents</div>
+                                                        : <div className={"documents-expired-btn"}>Hidden expired documents</div>
+                                                    }
+                                                </div>
+                                                <div className={"documents-block"} style={
+                                                    {display: isHiddenExpired === false ? "none" : "block"}
+                                                }>
+                                                    {documents.expired.map((elem, i) => (
+                                                            <Document key={i} elem={elem} name={name}/>
+                                                        )
+                                                    )}
+                                                </div>
+                                            </>
                                             : <div className={"news-block"}>
                                                 {news.map((elem, i) => (
                                                         <News key={i} news={elem}/>

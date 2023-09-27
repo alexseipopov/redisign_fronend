@@ -227,7 +227,7 @@ const StockRoot = ({name}) => {
                                     </div>
                                     {indexType !== "AMC" &&
                                         <div>
-                                            {documents.current.length !== 0 && documents.expired.length !== 0 &&
+                                            {(documents.current.length !== 0 || documents.expired.length) !== 0 &&
                                                 <div
                                                     onClick={() => setOption(2)}
                                                     className={`root_stock-option-btn documents ${option === 2 ? "active" : ""}`}>

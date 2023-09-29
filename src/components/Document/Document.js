@@ -34,7 +34,7 @@ const Document = ({elem, name}) => {
         <div onClick={() => getFile(name, elem.path)} className={"document-row"}>
             <img src={file} alt={"file img"}/>
             <div className={"document-info"}>
-                <div className={"document-name"}>{elem.filename} {elem.date_finish && <span>(Expired at {elem.date_finish})</span>}</div>
+                <div className={"document-name"}>{elem.filename} {elem.date_finish && <span>(Утратил силу {elem.date_finish})</span>}</div>
                 <div className={"document-type"}>PDF</div>
             </div>
             <img src={download} alt={"download img"}/>

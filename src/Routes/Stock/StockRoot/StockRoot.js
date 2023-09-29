@@ -303,11 +303,9 @@ const StockRoot = ({name}) => {
                                                     <>
                                                         <div onClick={() => setIsHiddenExpired(!isHiddenExpired)}>
                                                             {isHiddenExpired === false
-                                                                ? <div className={"documents-expired-btn"}>Show expired
-                                                                    documents</div>
+                                                                ? <div className={"documents-expired-btn"}>Показать утратившие силу</div>
                                                                 :
-                                                                <div className={"documents-expired-btn"}>Hidden expired
-                                                                    documents</div>
+                                                                <div className={"documents-expired-btn"}>Скрыть утратившие силу</div>
                                                             }
                                                         </div>
                                                         <div className={"documents-block"} style={

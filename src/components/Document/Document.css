@@ -3,6 +3,11 @@
     margin: 32px 0;
 }
 
+.documents-expired-btn{
+    color: #0080BF;
+    cursor: pointer;
+}
+
 .document-row {
     padding: 23px;
     background-color: #F5F6FA;

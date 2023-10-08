@@ -9,7 +9,7 @@ const Stock = () => {
     const {name} = useParams()
     useEffect(() => {
         document.title = `Rumberg | ${name.toUpperCase()} Index`
-    })
+    }, [])
     return (
         <div className={`stock`}>
             <Header/>

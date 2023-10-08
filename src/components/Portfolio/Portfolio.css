@@ -67,18 +67,22 @@
 
 .table__amount {
     width: 90px;
+    text-align: right;
 }
 
 .table__cost {
     width: 110px;
+    text-align: right;
 }
 
 .table__weight {
     width: 70px;
+    text-align: right;
 }
 
 .table__price {
     width: 100px;
+    text-align: right;
 }
 
 @media (max-width: 768px) {

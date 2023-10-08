@@ -161,7 +161,7 @@ const Portfolio = ({name}) => {
                             <div className={"table__emitent"}>Эмитент</div>
                             <div className={"table__amount"}>Кол-во, шт</div>
                             <div className={"table__price"}>Стоимость</div>
-                            <div className={"table__cost"}>Цена</div>
+                            <div className={"table__cost"}>Рыночная цена</div>
                             <div className={"table__weight"}>Вес, %</div>
                         </div>
                         {data.map((el, i) => (

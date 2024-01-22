@@ -10,7 +10,7 @@ import {useState} from "react";
 
 const GraphWindow = ({graphDataX, graphDataY, loadingGraph, metrics, mode ,setMode}) => {
     const modes = ["1M", "3M", "6M", "1Y", "2Y", "5Y", "10Y"]
-    const [modesSelected, setModesSelected] = useState(modes[0])
+    const [modesSelected, setModesSelected] = useState(modes[3])
 
     const changeMode = (elem) => {
         setModesSelected(elem)

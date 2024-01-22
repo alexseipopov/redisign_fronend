@@ -24,7 +24,7 @@ const StockRoot = ({name}) => {
     const [formattedDescription, setFormattedDescription] = useState("")
     const [isHiddenExpired, setIsHiddenExpired] = useState(false)
 
-    const [mode, setMode] = useState("1mo")
+    const [mode, setMode] = useState("1y")
     const [title, setTitle] = useState("")
     const [about, setAbout] = useState("")
     const [documents, setDocuments] = useState({

@@ -185,7 +185,7 @@ const Portfolio = ({name}) => {
             <div className={`portfolio`}>
                 <input className={`portfolio-date`} type="date" value={date} onChange={e => setDate(e.target.value)}/>
                 <div className={`pie-graphs`}>
-                    <h4>Данных на данную данных не существует</h4>
+                    <h4>Нет данных</h4>
                 </div>
             </div>
         )

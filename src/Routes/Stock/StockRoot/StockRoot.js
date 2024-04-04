@@ -110,7 +110,7 @@ const StockRoot = ({name}) => {
                 console.log(data.data)
                 if (data.data.code === 0) {
                     setIsPreviousDataExist(true)
-                    setIsDataExist(!data.data.metrics)
+                    setIsDataExist(Object.keys(data.data.metrics).length !== 0)
                     setGraphDataX(data.data.costs)
                     setGraphDataY(data.data.labels)
                     setAbout(data.data.about)
@@ -119,7 +119,7 @@ const StockRoot = ({name}) => {
                     setMetrics(data.data.metrics)
                 } else if (data.data.code === 1) {
                     setIsPreviousDataExist(false)
-                    setIsDataExist(!data.data.metrics)
+                    setIsDataExist(Object.keys(data.data.metrics).length !== 0)
                     setGraphDataX(data.data.costs)
                     setGraphDataY(data.data.labels)
                     setAbout(data.data.about)

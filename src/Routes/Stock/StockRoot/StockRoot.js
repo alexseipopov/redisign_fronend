@@ -110,7 +110,7 @@ const StockRoot = ({name}) => {
                 console.log(data.data)
                 if (data.data.code === 0) {
                     setIsPreviousDataExist(true)
-                    setIsDataExist(true)
+                    setIsDataExist(!data.data.metrics)
                     setGraphDataX(data.data.costs)
                     setGraphDataY(data.data.labels)
                     setAbout(data.data.about)
@@ -119,7 +119,7 @@ const StockRoot = ({name}) => {
                     setMetrics(data.data.metrics)
                 } else if (data.data.code === 1) {
                     setIsPreviousDataExist(false)
-                    setIsDataExist(true)
+                    setIsDataExist(!data.data.metrics)
                     setGraphDataX(data.data.costs)
                     setGraphDataY(data.data.labels)
                     setAbout(data.data.about)
@@ -289,7 +289,7 @@ const StockRoot = ({name}) => {
 
                                     </div>
                                     : option === 1
-                                        ? <Portfolio name={name}/>
+                                        ? <Portfolio name={name} type={indexType}/>
                                         : option === 2
                                             ? <>
                                                 <div className={"documents-block"}>

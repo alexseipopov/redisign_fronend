@@ -41,22 +41,23 @@ const BarWindow = ({name}) => {
     }
 
     useEffect(() => {
-        axios({
-            method: 'post',
-            url: "/api/get_bar_data",
-            data: {
-                mode: mode,
-                portfolio: name
-            },
-            headers: {
-                "Access-Control-Allow-Origin": "*"
-            }
-        }).then(data => {
-            setBarData(data.data.data.y)
-            setLabels(data.data.data.x)
-            setEmitents(data.data.data.emitents)
-        })
-
+        if (name === "AMC") {
+            axios({
+                method: 'post',
+                url: "/api/get_bar_data",
+                data: {
+                    mode: mode,
+                    portfolio: name
+                },
+                headers: {
+                    "Access-Control-Allow-Origin": "*"
+                }
+            }).then(data => {
+                setBarData(data.data.data.y)
+                setLabels(data.data.data.x)
+                setEmitents(data.data.data.emitents)
+            })
+        }
     }, [mode])
 
     return (

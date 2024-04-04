@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import Plot from 'react-plotly.js'
 
-const Portfolio = ({name}) => {
+const Portfolio = ({name, type}) => {
     const [isExist, setIsExist] = useState(true)
     const [data, setData] = useState([])
     const [pieData, setPieData] = useState({})
@@ -12,6 +12,7 @@ const Portfolio = ({name}) => {
     const [pieGraph, setPieGraph] = useState(700)
     const [onload, setOnload] = useState(false)
     const [isMobile, setIsMobile] = useState(false)
+    const [areaData, setAreaData] = useState([])
     useEffect(() => {
         axios(`/api/get_product_data`, {
             data: {
@@ -34,6 +35,19 @@ const Portfolio = ({name}) => {
     useEffect(() => {
         setPieGraph(document.querySelector(".pie-graphs").offsetWidth)
     }, [onload])
+
+    useEffect(() => {
+        if (type === "VolTarget") {
+            axios(`/api/get_area_data`, {
+                data: {
+                    "portfolio": name
+                },
+                method: "POST"
+            }).then(resp => {
+                setAreaData(resp.data)
+            })
+        }
+    }, [type])
 
     if (document.querySelector(".pie-graphs") && onload === false) {
         setOnload(true)
@@ -153,14 +167,31 @@ const Portfolio = ({name}) => {
                         }}/>
                     </div>
                 </div>
+                {areaData &&
+                    <Plot data={areaData} layout={{
+                        margin: {
+                            l: isMobile ? 15 : 50,
+                            r: isMobile ? 15 : 50,
+                            t: 70,
+                            b: 0
+                        },
+                        title: 'Динамика портфеля',
+                        showlegend: true,
+                        autosize: true,
+                        automargin: true,
+                        // grid: {rows: 1, columns: 1}
+                    }} config={{
+                        displayModeBar: false,
+                    }}/>
+                }
                 <div className="portfolio-table-wrapper">
                     <div className={"portfolio-table"}>
                         <div className={`portfolio-table_header`}>
                             <div className={"table__type"}>Тип</div>
                             <div className={"table__isin"}>ISIN</div>
-                            <div className={"table__emitent"}>Эмитент</div>
-                            <div className={"table__amount"}>Кол-во, шт</div>
-                            <div className={"table__price"}>Стоимость</div>
+                            {type === "Vanilla" && <div className={"table__emitent"}>Эмитент</div>}
+                            {type === "Vanilla" && <div className={"table__amount"}>Кол-во, шт</div>}
+                            {type === "Vanilla" && <div className={"table__price"}>Стоимость</div>}
                             <div className={"table__cost"}>Рыночная цена</div>
                             <div className={"table__weight"}>Вес, %</div>
                         </div>
@@ -168,9 +199,9 @@ const Portfolio = ({name}) => {
                             <div key={i} className={`portfolio-table_row`}>
                                 <div className={"table__type"}>{el.type}</div>
                                 <div className={"table__isin"}>{el.isin}</div>
-                                <div className={"table__emitent"}>{el.emitent}</div>
-                                <div className={"table__amount"}>{el.amount}</div>
-                                <div className={"table__cost"}>{el.cost}</div>
+                                {type === "Vanilla" && <div className={"table__emitent"}>{el.emitent}</div>}
+                                {type === "Vanilla" && <div className={"table__amount"}>{el.amount}</div>}
+                                {type === "Vanilla" && <div className={"table__cost"}>{el.cost}</div>}
                                 <div className={"table__price"}>{el.price}</div>
                                 <div className={"table__weight"}>{(Number(el.weight) * 100).toFixed(2)}</div>
                             </div>

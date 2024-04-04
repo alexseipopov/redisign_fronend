@@ -167,7 +167,7 @@ const Portfolio = ({name, type}) => {
                         }}/>
                     </div>
                 </div>
-                {areaData &&
+                {!areaData && type === "VolTarget" &&
                     <Plot data={areaData} layout={{
                         margin: {
                             l: isMobile ? 15 : 50,

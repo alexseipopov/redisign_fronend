@@ -27,8 +27,8 @@ jobs:
             docker build -t cr.yandex/$CR_REGISTRY/$CR_REPO:stand .
             docker push cr.yandex/$CR_REGISTRY/$CR_REPO:stand
           elif [ "$GITHUB_REPOSITORY" == "alexseipopov/redisign_fronend" ] && [ "$GITHUB_REF" == "refs/heads/main" ]; then
-            docker build -t cr.yandex/$CR_REGISTRY/$CR_REPO:prod .
-            docker push cr.yandex/$CR_REGISTRY/$CR_REPO:prod
+            docker build -t cr.yandex/$CR_REGISTRY/$CR_REPO:prod_ .
+            docker push cr.yandex/$CR_REGISTRY/$CR_REPO:prod_
           fi
 
   deploy:

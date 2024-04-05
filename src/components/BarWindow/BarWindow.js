@@ -41,7 +41,6 @@ const BarWindow = ({name}) => {
     }
 
     useEffect(() => {
-        if (name === "AMC") {
             axios({
                 method: 'post',
                 url: "/api/get_bar_data",
@@ -57,7 +56,6 @@ const BarWindow = ({name}) => {
                 setLabels(data.data.data.x)
                 setEmitents(data.data.data.emitents)
             })
-        }
     }, [mode])
 
     return (

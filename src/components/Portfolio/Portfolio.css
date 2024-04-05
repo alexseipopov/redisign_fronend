@@ -6,7 +6,8 @@
 .portfolio-date {
     padding: 9px 14px;
     border-radius: 6px;
-    border: 1px solid #E4E4EB
+    border: 1px solid #E4E4EB;
+    margin-top: 20px;
 }
 
 .pie-graphs {

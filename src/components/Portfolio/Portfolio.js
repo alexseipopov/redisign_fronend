@@ -120,7 +120,7 @@ const Portfolio = ({name, type}) => {
         // },],
         // height: "100%",
         width: pieGraph / 2,
-        height: pieGraph * 1.15 / 2,
+        height: pieGraph * 0.95 / 2,
         // textposition: 'outside',
         showlegend: false,
         // grid: {rows: 1, columns: 1}
@@ -144,7 +144,7 @@ const Portfolio = ({name, type}) => {
         // },],
         // height: 400,
         width: pieGraph / 2,
-        height: pieGraph * 1.15 / 2,
+        height: pieGraph * 0.95 / 2,
         // textposition: 'outside',
         showlegend: false,
         autosize: true,
@@ -154,6 +154,30 @@ const Portfolio = ({name, type}) => {
     if (isExist === true) {
         return (
             <div className={`portfolio`}>
+                {areaData.length !== 0 && type === "VolTarget" &&
+                    <Plot data={areaData} layout={{
+                        margin: {
+                            l: isMobile ? 15 : 50,
+                            r: isMobile ? 15 : 50,
+                            t: 70,
+                            b: 0
+                        },
+                        title: 'Динамика портфеля',
+                        showlegend: true,
+                        autosize: true,
+                        automargin: true,
+                        hovermode: 'x unified',
+                        legend: {
+                            orientation: "h",
+                            x: 0,
+                            y: 1.01,
+                            yanchor: "bottom",
+                        }
+                        // grid: {rows: 1, columns: 1}
+                    }} config={{
+                        displayModeBar: false,
+                    }}/>
+                }
                 <input className={`portfolio-date`} type="date" value={date} onChange={e => setDate(e.target.value)}/>
                 <div className={`pie-graphs`}>
                     <div className="pie-graph">
@@ -167,28 +191,12 @@ const Portfolio = ({name, type}) => {
                         }}/>
                     </div>
                 </div>
-                {areaData.length !== 0 && type === "VolTarget" &&
-                    <Plot data={areaData} layout={{
-                        margin: {
-                            l: isMobile ? 15 : 50,
-                            r: isMobile ? 15 : 50,
-                            t: 70,
-                            b: 0
-                        },
-                        title: 'Динамика портфеля',
-                        showlegend: true,
-                        autosize: true,
-                        automargin: true,
-                        // grid: {rows: 1, columns: 1}
-                    }} config={{
-                        displayModeBar: false,
-                    }}/>
-                }
                 <div className="portfolio-table-wrapper">
                     <div className={"portfolio-table"}>
                         <div className={`portfolio-table_header`}>
                             <div className={"table__type"}>Тип</div>
                             <div className={"table__isin"}>ISIN</div>
+                            {type === "VolTarget" && <div className={"table__emitent"}>Название</div>}
                             {type === "Vanilla" && <div className={"table__emitent"}>Эмитент</div>}
                             {type === "Vanilla" && <div className={"table__amount"}>Кол-во, шт</div>}
                             {type === "Vanilla" && <div className={"table__price"}>Стоимость</div>}
@@ -199,6 +207,7 @@ const Portfolio = ({name, type}) => {
                             <div key={i} className={`portfolio-table_row`}>
                                 <div className={"table__type"}>{el.type}</div>
                                 <div className={"table__isin"}>{el.isin}</div>
+                                {type === "VolTarget" && <div className={"table__emitent"}>{el.name}</div>}
                                 {type === "Vanilla" && <div className={"table__emitent"}>{el.emitent}</div>}
                                 {type === "Vanilla" && <div className={"table__amount"}>{el.amount}</div>}
                                 {type === "Vanilla" && <div className={"table__cost"}>{el.cost}</div>}

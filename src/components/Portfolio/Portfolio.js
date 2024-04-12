@@ -2,6 +2,7 @@ import './Portfolio.css'
 import {useEffect, useState} from "react";
 import axios from "axios";
 import Plot from 'react-plotly.js'
+import BarWindow from "../BarWindow/BarWindow";
 
 const Portfolio = ({name, type}) => {
     const [isExist, setIsExist] = useState(true)
@@ -36,18 +37,18 @@ const Portfolio = ({name, type}) => {
         setPieGraph(document.querySelector(".pie-graphs").offsetWidth)
     }, [onload])
 
-    useEffect(() => {
-        if (type === "VolTarget") {
-            axios(`/api/get_area_data`, {
-                data: {
-                    "portfolio": name
-                },
-                method: "POST"
-            }).then(resp => {
-                setAreaData(resp.data)
-            })
-        }
-    }, [type])
+    // useEffect(() => {
+    //     if (type === "VolTarget") {
+    //         axios(`/api/get_area_data`, {
+    //             data: {
+    //                 "portfolio": name
+    //             },
+    //             method: "POST"
+    //         }).then(resp => {
+    //             setAreaData(resp.data)
+    //         })
+    //     }
+    // }, [type])
 
     if (document.querySelector(".pie-graphs") && onload === false) {
         setOnload(true)
@@ -154,29 +155,31 @@ const Portfolio = ({name, type}) => {
     if (isExist === true) {
         return (
             <div className={`portfolio`}>
-                {areaData.length !== 0 && type === "VolTarget" &&
-                    <Plot data={areaData} layout={{
-                        margin: {
-                            l: isMobile ? 15 : 50,
-                            r: isMobile ? 15 : 50,
-                            t: 70,
-                            b: 0
-                        },
-                        title: 'Динамика портфеля',
-                        showlegend: true,
-                        autosize: true,
-                        automargin: true,
-                        hovermode: 'x unified',
-                        legend: {
-                            orientation: "h",
-                            x: 0,
-                            y: 1.01,
-                            yanchor: "bottom",
-                        }
-                        // grid: {rows: 1, columns: 1}
-                    }} config={{
-                        displayModeBar: false,
-                    }}/>
+                { type === "VolTarget" && // areaData.length !== 0 &&
+                    // <Plot data={areaData} layout={{
+                    //     margin: {
+                    //         l: isMobile ? 15 : 50,
+                    //         r: isMobile ? 15 : 50,
+                    //         t: 70,
+                    //         b: 0
+                    //     },
+                    //     title: 'Динамика портфеля',
+                    //     showlegend: true,
+                    //     autosize: true,
+                    //     automargin: true,
+                    //     hovermode: 'x unified',
+                    //     barmode: "stack",
+                    //     legend: {
+                    //         orientation: "h",
+                    //         x: 0,
+                    //         y: 1.01,
+                    //         yanchor: "bottom",
+                    //     }
+                    //     // grid: {rows: 1, columns: 1}
+                    // }} config={{
+                    //     displayModeBar: false,
+                    // }}/>
+                    <BarWindow type={type} name={name}/>
                 }
                 <input className={`portfolio-date`} type="date" value={date} onChange={e => setDate(e.target.value)}/>
                 <div className={`pie-graphs`}>

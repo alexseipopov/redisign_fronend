@@ -28,7 +28,7 @@ const GraphWindow = ({graphDataX, graphDataY, loadingGraph, metrics, mode ,setMo
                         </div>
                         <div className={"graph-price-block"}>
                             <div className={"graph-price"}>
-                                {metrics.last_value.value}
+                                {Number(metrics.last_value.value).toFixed(2)}
                             </div>
                             <div
                                 className={`graph-dynamic ${Number(metrics.previous_value.delta).toFixed(2) > 0

@@ -194,7 +194,7 @@ const StockRoot = ({name}) => {
                                 ? <div>
                                     {indexType === "AMC"
                                         ? <div>
-                                            <BarWindow name={name}/>
+                                            <BarWindow name={name} type={indexType}/>
                                         </div>
 
                                         : <GraphWindow

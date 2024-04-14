@@ -59,6 +59,11 @@
 
 .select_component-list.active {
     visibility: visible;
+    overflow: auto;
+}
+
+.select_component-list.active::-webkit-scrollbar {
+    display: none;
 }
 
 .select_component-listener {

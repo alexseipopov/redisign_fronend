@@ -22,7 +22,7 @@ ChartJS.register(
     Legend
 );
 
-const BarWindow = ({name}) => {
+const BarWindow = ({type, name}) => {
     const isMobile = window.innerWidth < 768
     const modes = ["1M", "3M", "6M", "1Y", "2Y", "5Y", "10Y"]
     const colors = ["#FF6384", "#36A2EB", "#FFCE56", "#FFAA00", "#FF00AA", "#00FFAA", "#AA00FF"]
@@ -41,6 +41,8 @@ const BarWindow = ({name}) => {
     }
 
     useEffect(() => {
+        console.warn(type)
+        if (type === "AMC") {
             axios({
                 method: 'post',
                 url: "/api/get_bar_data",
@@ -56,6 +58,20 @@ const BarWindow = ({name}) => {
                 setLabels(data.data.data.x)
                 setEmitents(data.data.data.emitents)
             })
+        } else if (type === "VolTarget") {
+            axios(`/api/get_area_data`, {
+                data: {
+                    mode: mode,
+                    portfolio: name
+                },
+                method: "POST"
+            }).then(data => {
+                console.warn(data.data)
+                setBarData(data.data.y)
+                setLabels(data.data.x)
+                setEmitents(data.data.emitents)
+            })
+        }
     }, [mode])
 
     return (
@@ -92,9 +108,25 @@ const BarWindow = ({name}) => {
                         },
                     },
                 },
+                // plugins: {
+                //     legend: {
+                //         position: 'bottom',
+                //     }
+                // },
                 plugins: {
                     legend: {
                         position: 'bottom',
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                const datasetLabel = tooltipItem.dataset.label || '';
+                                const value = tooltipItem.raw;
+                                return `${datasetLabel}: ${(value * 100).toFixed(4)}%`;
+                            }
+                        }
                     }
                 }
             }}/>

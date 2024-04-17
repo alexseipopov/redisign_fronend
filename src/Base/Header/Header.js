@@ -1,6 +1,6 @@
 import './Header.css'
 import Container from "../../components/Container/Container";
-import logo from '../../static/logo.svg'
+import logo from '../../static/logo.png'
 import {Link} from "react-router-dom";
 
 const Header = () => {
@@ -9,7 +9,9 @@ const Header = () => {
           <Container>
               <div className={'header'}>
                   <Link to={"/"}>
-                      <img src={logo} alt={"Rumberg logo"} />
+                      <div className="logo-container">
+                          <img src={logo} alt={"Rumberg logo"} />
+                      </div>
                   </Link>
               </div>
           </Container>

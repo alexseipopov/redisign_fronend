@@ -38,7 +38,10 @@ export const About = () => {
                 id: id
             }
         }).then(response => {
-
+            if (response.status !== 200) {
+                window.alert("Ошибка при загрузке файла")
+                return
+            }
             const url = window.URL.createObjectURL(new Blob([response.data]))
             const link = document.createElement('a')
             link.href = url
@@ -60,7 +63,7 @@ export const About = () => {
 
                 {files.map((elem, index) => {
                         return (
-                            <div className="document-row" onClick={() => downloadFile(elem.id, elem.title)}>
+                            <div className="document-row" onClick={() => downloadFile(elem.id, elem.filename)}>
                                 <img src={file} alt={"file img"}/>
                                 <div className={"document-info"}>
                                     <div className={"document-name"}>{elem.title}</div>

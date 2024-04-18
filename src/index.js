@@ -5,11 +5,16 @@ import reportWebVitals from './reportWebVitals';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Root from "./Routes/Root/Root";
 import Stock from "./Routes/Stock/Stock";
+import {About} from "./Routes/About/About";
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <Root />
+    },
+    {
+        path: '/about',
+        element: <About />
     },
     {
         path: '/:name',

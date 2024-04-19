@@ -10,7 +10,9 @@ const Header = () => {
               <div className={'header'}>
                   <Link to={"/"}>
                       <div className="logo-container">
-                          <img src={logo} alt={"Rumberg logo"} />
+                          <img style={{
+                              marginLeft: "-25px"
+                          }} src={logo} alt={"Rumberg logo"} />
                       </div>
                   </Link>
               </div>

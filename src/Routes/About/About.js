@@ -58,9 +58,6 @@ export const About = () => {
                 {status === 0 && <ReactMarkdown>{text}</ReactMarkdown>}
             </div>
             {files.length > 0 && <div className="container">
-                <h2 style={{marginTop: "10px"}}>Файлы</h2>
-
-
                 {files.map((elem, index) => {
                         return (
                             <div className="document-row" onClick={() => downloadFile(elem.id, elem.filename)}>

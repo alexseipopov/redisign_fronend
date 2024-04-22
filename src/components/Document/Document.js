@@ -30,7 +30,6 @@ const Document = ({elem, name}) => {
         })
     }
     return (
-        // <div onClick={() => getFile(name, elem.path_file)} className={"document-row"}>
         <div onClick={() => getFile(name, elem.path)} className={"document-row"}>
             <img src={file} alt={"file img"}/>
             <div className={"document-info"}>

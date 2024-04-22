@@ -108,11 +108,6 @@ const BarWindow = ({type, name}) => {
                         },
                     },
                 },
-                // plugins: {
-                //     legend: {
-                //         position: 'bottom',
-                //     }
-                // },
                 plugins: {
                     legend: {
                         position: 'bottom',

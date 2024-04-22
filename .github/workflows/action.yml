@@ -1,27 +1,27 @@
-name: Build, push and deploy app
-on: [push]
+name: Build, push and deploy app # Название workflow
+on: [push] # Событие, при котором запускается action
 
-jobs:
-  build_and_push_docker_image:
-    name: Build and push to yc-cr
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v2
-        if: ${{ github.repository == 'alexseipopov/redisign_fronend' && (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main') }}
-      - name: Yandex CR Login
-        uses: yc-actions/yc-cr-login@v0.1-alpha
-        if: ${{ github.repository == 'alexseipopov/redisign_fronend' && (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main') }}
-        with:
-          yc-sa-json-credentials: ${{ secrets.YC_KEY }}
-      - name: Build image
-        if: ${{ github.repository == 'alexseipopov/redisign_fronend' && (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main') }}
-        env:
-          CR_REGISTRY: crpo63gr16fshqrmielj
-          CR_REPO: rmb_index_frontend
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          echo $GITHUB_REPOSITORY
+jobs: # Указываем список задач
+  build_and_push_docker_image: # Название задачи
+    name: Build and push to yc-cr # Название задачи
+    runs-on: ubuntu-latest # ОС на которой будет выполняться задача
+    steps: # Список шагов
+      - name: Check out the repo # Название шага
+        uses: actions/checkout@v2 # Используем готовый action для клонирования репозитория
+        if: ${{ github.repository == 'alexseipopov/redisign_fronend' && (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main') }} # Условие выполнения шага
+      - name: Yandex CR Login # Название шага
+        uses: yc-actions/yc-cr-login@v0.1-alpha # Используем готовый action для авторизации в yc-cr
+        if: ${{ github.repository == 'alexseipopov/redisign_fronend' && (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main') }} # Условие выполнения шага
+        with: # Переменные окружения
+          yc-sa-json-credentials: ${{ secrets.YC_KEY }} # Секрет с ключом для авторизации
+      - name: Build image # Название шага
+        if: ${{ github.repository == 'alexseipopov/redisign_fronend' && (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main') }} # Условие выполнения шага
+        env: # Переменные окружения
+          CR_REGISTRY: crpo63gr16fshqrmielj # Реестр yc-cr
+          CR_REPO: rmb_index_frontend # Название репозитория в yc-cr
+          IMAGE_TAG: ${{ github.sha }} # Тег образа
+        run: | # Команды для выполнения
+          echo $GITHUB_REPOSITORY 
           echo $GITHUB_REF
           if [ "$GITHUB_REPOSITORY" == "alexseipopov/redisign_fronend" ] && [ "$GITHUB_REF" == "refs/heads/develop" ]; then
             docker build -t cr.yandex/$CR_REGISTRY/$CR_REPO:stand .
@@ -31,21 +31,21 @@ jobs:
             docker push cr.yandex/$CR_REGISTRY/$CR_REPO:prod
           fi
 
-  deploy:
-    name: Deploy on server
-    needs: build_and_push_docker_image
-    runs-on: ubuntu-latest
-    steps:
-      - name: SSH connect and deploy
-        uses: appleboy/ssh-action@master
-        if: ${{ github.repository == 'alexseipopov/redisign_fronend' && github.ref == 'refs/heads/develop' }}
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          key: ${{ secrets.PRIVATE_SSH_KEY }}
-          passphrase: ${{ secrets.PASSPHRASE }}
-          IMAGE_TAG: ${{ github.sha }}
-          shell: bash
-          script: |
+  deploy: # Название задачи
+    name: Deploy on server # Название задачи
+    needs: build_and_push_docker_image # Зависимость от предыдущей задачи
+    runs-on: ubuntu-latest # ОС на которой будет выполняться задача
+    steps: # Список шагов
+      - name: SSH connect and deploy # Название шага
+        uses: appleboy/ssh-action@master # Используем готовый action для подключения по ssh
+        if: ${{ github.repository == 'alexseipopov/redisign_fronend' && github.ref == 'refs/heads/develop' }}   # Условие выполнения шага
+        with: # Переменные окружения
+          host: ${{ secrets.HOST }} # Адрес сервера
+          username: ${{ secrets.USER }} # Имя пользователя
+          key: ${{ secrets.PRIVATE_SSH_KEY }} # Приватный ключ
+          passphrase: ${{ secrets.PASSPHRASE }} # Пароль
+          IMAGE_TAG: ${{ github.sha }} # Тег образа
+          shell: bash # Оболочка
+          script: | # Команды для выполнения
             docker pull cr.yandex/crpo63gr16fshqrmielj/rmb_index_frontend:stand
             docker-compose up --no-deps -d frontend

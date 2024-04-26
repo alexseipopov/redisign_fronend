@@ -54,7 +54,6 @@ export const About = () => {
         <div>
             <Header/>
             <div className="container">
-                <h1>О Компании</h1>
                 {status === 0 && <ReactMarkdown>{text}</ReactMarkdown>}
             </div>
             {files.length > 0 && <div className="container">

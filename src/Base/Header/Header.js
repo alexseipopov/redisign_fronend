@@ -1,6 +1,6 @@
 import './Header.css'
 import Container from "../../components/Container/Container";
-import logo from '../../static/logo.png'
+import logo from '../../static/logo.jpg'
 import {Link} from "react-router-dom";
 
 const Header = () => {
@@ -11,7 +11,7 @@ const Header = () => {
                   <Link to={"/"}>
                       <div className="logo-container">
                           <img style={{
-                              marginLeft: "-25px"
+                              marginLeft: "-26px"
                           }} src={logo} alt={"Rumberg logo"} />
                       </div>
                   </Link>
